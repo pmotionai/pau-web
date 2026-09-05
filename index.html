@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pau Automatizaciones — Automatización con IA para negocios locales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F7F3EC;
+    --cream-2:#EFE9DC;
+    --ink:#1C1917;
+    --ink-soft:#4A453E;
+    --bottle:#20402F;
+    --bottle-light:#4A6B58;
+    --mint:#7FBF9E;
+    --line:#DCD5C4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Work Sans',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--bottle-light);
+    font-weight:600;
+    margin-bottom:14px;
+    display:block;
+  }
+
+  /* Header */
+  header{
+    padding:24px 0;
+    position:sticky;
+    top:0;
+    background:rgba(247,243,236,0.92);
+    backdrop-filter:blur(6px);
+    z-index:50;
+    border-bottom:1px solid var(--line);
+  }
+  header .wrap{display:flex;justify-content:space-between;align-items:center;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:20px;font-weight:600;}
+  .brand .mark{
+    width:34px;height:34px;border-radius:50%;
+    background:var(--bottle);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:18px;position:relative;
+  }
+  .brand .mark::after{
+    content:"";position:absolute;top:2px;right:3px;
+    width:5px;height:5px;border-radius:50%;background:var(--mint);
+  }
+  nav{display:flex;gap:30px;font-size:15px;}
+  nav a{opacity:0.75;transition:opacity .2s;}
+  nav a:hover{opacity:1;}
+  .btn-wa{
+    background:var(--bottle);
+    color:#fff;
+    padding:11px 22px;
+    border-radius:3px;
+    font-size:14px;
+    font-weight:500;
+    white-space:nowrap;
+  }
+  .btn-wa:hover{background:#152e21;}
+
+  /* Hero */
+  .hero{
+    padding:100px 0 110px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero .inner{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:60px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:58px;
+    line-height:1.08;
+    margin-bottom:24px;
+  }
+  .hero h1 em{font-style:normal;color:var(--bottle);}
+  .hero p.lead{
+    font-size:19px;
+    color:var(--ink-soft);
+    max-width:42ch;
+    margin-bottom:34px;
+  }
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .btn-primary{
+    background:var(--bottle);
+    color:#fff;
+    padding:15px 28px;
+    font-size:15px;
+    font-weight:500;
+    border-radius:3px;
+    display:inline-block;
+  }
+  .btn-primary:hover{background:#152e21;}
+  .btn-ghost{
+    font-size:15px;
+    font-weight:500;
+    color:var(--ink);
+    border-bottom:1px solid var(--ink);
+    padding-bottom:2px;
+  }
+  .hero-card{
+    background:var(--bottle);
+    border-radius:6px;
+    padding:36px;
+    color:#fff;
+  }
+  .hero-card .phone-bar{
+    display:flex;align-items:center;gap:10px;
+    padding-bottom:16px;margin-bottom:16px;
+    border-bottom:1px solid rgba(255,255,255,0.15);
+    font-size:14px;font-weight:500;
+  }
+  .hero-card .dot{width:8px;height:8px;background:var(--mint);border-radius:50%;}
+  .msgs{display:flex;flex-direction:column;gap:10px;}
+  .msg{max-width:82%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.4;}
+  .msg.bot{background:rgba(255,255,255,0.1);align-self:flex-start;border-bottom-left-radius:3px;}
+  .msg.user{background:var(--mint);color:var(--bottle);align-self:flex-end;border-bottom-right-radius:3px;font-weight:500;}
+
+  /* Trust bar */
+  .trust{
+    padding:28px 0;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    gap:48px;
+    justify-content:center;
+    flex-wrap:wrap;
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+  .trust span{display:flex;align-items:center;gap:8px;}
+  .trust .dot2{width:6px;height:6px;background:var(--mint);border-radius:50%;}
+
+  /* Section generic */
+  section{padding:100px 0;border-bottom:1px solid var(--line);}
+  section h2{font-size:38px;max-width:20ch;margin-bottom:20px;}
+  section p.section-lead{font-size:17px;color:var(--ink-soft);max-width:56ch;margin-bottom:56px;}
+
+  /* Services */
+  .service-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .service-card{
+    background:var(--cream);
+    padding:40px;
+  }
+  .service-card .num{
+    font-family:'Fraunces',serif;
+    font-size:15px;
+    color:var(--mint);
+    background:var(--bottle);
+    width:30px;height:30px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:24px;
+  }
+  .service-card h3{font-size:23px;margin-bottom:12px;}
+  .service-card p{font-size:15px;color:var(--ink-soft);margin-bottom:18px;}
+  .service-card ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .service-card li{font-size:14px;color:var(--ink-soft);display:flex;gap:10px;align-items:flex-start;}
+  .service-card li::before{content:"";width:5px;height:5px;background:var(--mint);border-radius:50%;margin-top:8px;flex-shrink:0;}
+  .service-card .tag{
+    display:inline-block;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--bottle-light);
+    margin-top:16px;
+  }
+
+  /* How it works */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;}
+  .step{position:relative;padding-top:28px;}
+  .step .stepnum{
+    font-family:'Fraunces',serif;
+    font-size:44px;
+    color:var(--line);
+    position:absolute;top:-10px;left:0;
+  }
+  .step h3{font-size:18px;margin-bottom:8px;}
+  .step p{font-size:14px;color:var(--ink-soft);}
+
+  /* Pricing */
+  .pricing-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .price-card{
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:36px 28px;
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+  }
+  .price-card.featured{
+    background:var(--bottle);
+    color:#fff;
+    border-color:var(--bottle);
+  }
+  .price-card .plan-name{font-family:'Fraunces',serif;font-size:22px;margin-bottom:6px;}
+  .price-card .plan-desc{font-size:14px;color:var(--ink-soft);margin-bottom:24px;}
+  .price-card.featured .plan-desc{color:#D6E3DA;}
+  .price-card .price{font-family:'Fraunces',serif;font-size:38px;margin-bottom:4px;}
+  .price-card .price-note{font-size:13px;color:var(--ink-soft);margin-bottom:24px;}
+  .price-card.featured .price-note{color:#B9CDC1;}
+  .price-card ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:28px;flex:1;}
+  .price-card li{font-size:14px;display:flex;gap:10px;align-items:flex-start;}
+  .price-card li::before{content:"✓";color:var(--mint);font-weight:700;flex-shrink:0;}
+  .price-card .btn-primary{text-align:center;}
+  .price-card.featured .btn-primary{background:#fff;color:var(--bottle);}
+  .badge{
+    display:inline-block;
+    background:var(--mint);
+    color:var(--bottle);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border-radius:20px;
+    margin-bottom:14px;
+    align-self:flex-start;
+  }
+
+  /* About */
+  .about{display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:center;}
+  .about .portrait{
+    aspect-ratio:4/5;
+    background:var(--bottle);
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .about .portrait .mark-lg{
+    width:110px;height:110px;border-radius:50%;
+    background:#fff;color:var(--bottle);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:56px;
+    position:relative;
+  }
+  .about .portrait .mark-lg::after{
+    content:"";position:absolute;top:10px;right:14px;
+    width:12px;height:12px;border-radius:50%;background:var(--mint);
+  }
+  .about h2{margin-bottom:20px;}
+  .about p{font-size:16px;color:var(--ink-soft);margin-bottom:18px;max-width:52ch;}
+
+  /* FAQ */
+  .faq-item{
+    border-bottom:1px solid var(--line);
+    padding:26px 0;
+  }
+  .faq-item h3{font-size:18px;margin-bottom:10px;font-weight:600;font-family:'Work Sans',sans-serif;}
+  .faq-item p{font-size:15px;color:var(--ink-soft);max-width:60ch;}
+
+  /* CTA */
+  .cta{
+    text-align:center;
+    background:var(--bottle);
+    color:#fff;
+    border-bottom:none;
+  }
+  .cta h2{color:#fff;max-width:18ch;margin:0 auto 18px;}
+  .cta p{color:#D6E3DA;max-width:48ch;margin:0 auto 34px;font-size:17px;}
+  .cta .btn-primary{background:#fff;color:var(--bottle);font-size:16px;padding:17px 32px;}
+
+  footer{
+    padding:40px 0;
+    font-size:13px;
+    color:var(--ink-soft);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  /* Legal section (accordion) */
+  .legal{
+    padding:70px 0;
+    border-bottom:1px solid var(--line);
+    background:var(--cream-2);
+  }
+  .legal-item{
+    border:1px solid var(--line);
+    border-radius:6px;
+    background:#fff;
+    margin-bottom:16px;
+    overflow:hidden;
+  }
+  .legal-item summary{
+    cursor:pointer;
+    list-style:none;
+    padding:22px 26px;
+    font-family:'Fraunces',serif;
+    font-size:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .legal-item summary::-webkit-details-marker{display:none;}
+  .legal-item summary .chev{
+    font-family:'Work Sans',sans-serif;
+    font-size:22px;
+    color:var(--bottle-light);
+    transition:transform .2s;
+    flex-shrink:0;
+    margin-left:20px;
+  }
+  .legal-item[open] summary .chev{transform:rotate(45deg);}
+  .legal-body{padding:0 26px 30px;}
+  .legal-body .updated{font-size:13px;color:var(--ink-soft);margin-bottom:22px;}
+  .legal-body h3{
+    font-family:'Work Sans',sans-serif;
+    font-weight:600;
+    font-size:15.5px;
+    margin-top:22px;
+    margin-bottom:8px;
+    color:var(--ink);
+  }
+  .legal-body p,.legal-body li{font-size:14.5px;color:var(--ink-soft);margin-bottom:10px;}
+  .legal-body ul{padding-left:18px;}
+  .legal-notice{
+    background:var(--cream);border:1px solid var(--line);border-radius:6px;
+    padding:14px 18px;margin-bottom:8px;font-size:13.5px;color:var(--ink-soft);
+  }
+
+  /* Legal section */
+  .legal{
+    padding:90px 0;
+    border-bottom:1px solid var(--line);
+    background:var(--cream-2);
+  }
+  .legal-block{max-width:760px;}
+  .legal-block + .legal-block{margin-top:72px;}
+  .legal h2{font-size:28px;margin-bottom:6px;}
+  .legal .updated{font-size:13px;color:var(--ink-soft);margin-bottom:26px;}
+  .legal h3{
+    font-family:'Work Sans',sans-serif;
+    font-weight:600;
+    font-size:16px;
+    margin-top:26px;
+    margin-bottom:8px;
+    color:var(--ink);
+  }
+  .legal p,.legal li{font-size:14.5px;color:var(--ink-soft);margin-bottom:10px;}
+  .legal ul{padding-left:18px;}
+  .legal-notice{
+    background:#fff;border:1px solid var(--line);border-radius:6px;
+    padding:16px 20px;margin-bottom:10px;font-size:13.5px;color:var(--ink-soft);
+  }
+
+  @media (max-width:860px){
+    .hero .inner,.about,.service-grid,.steps,.pricing-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:38px;}
+    nav{display:none;}
+    section{padding:64px 0;}
+    section h2{font-size:28px;}
+    .hero{padding:56px 0 64px;}
+    .trust{gap:20px;font-size:13px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand"><span class="mark">P</span> Pau Automatizaciones</div>
+    <nav>
+      <a href="#servicios">Servicios</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#precios">Precios</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:18px;">
+      <a href="https://www.instagram.com/pau.automatizaciones/" target="_blank" rel="noopener" aria-label="Instagram" style="opacity:0.8;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
+      <a class="btn-wa" href="https://wa.me/34628540580" target="_blank" rel="noopener">Escríbeme →</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap inner">
+    <div>
+      <span class="eyebrow">Automatización con IA</span>
+      <h1>Tu negocio, respondiendo <em>solo</em>, 24 horas al día.</h1>
+      <p class="lead">Diseño y monto asistentes de WhatsApp que responden preguntas, agendan citas y las gestionan solos, para que no se te escape ni un cliente por no contestar a tiempo.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="https://wa.me/34628540580" target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="phone-bar"><span class="dot"></span> Tu negocio</div>
+      <div class="msgs">
+        <div class="msg bot">¡Hola! 👋 ¿Qué te gustaría hacer?</div>
+        <div class="msg user">Reservar una cita</div>
+        <div class="msg bot">Huecos libres para el viernes: 10:00, 16:00</div>
+        <div class="msg user">16:00</div>
+        <div class="msg bot">Cita confirmada ✅ Te esperamos el viernes a las 16:00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <span><span class="dot2"></span>Sin permanencia</span>
+  <span><span class="dot2"></span>Configuración a medida</span>
+  <span><span class="dot2"></span>Soporte directo conmigo</span>
+</div>
+
+<section id="servicios">
+  <div class="wrap">
+    <span class="eyebrow">Qué hago</span>
+    <h2>Un asistente que trabaja mientras tú atiendes a tus clientes</h2>
+    <p class="section-lead">Empiezas por lo esencial y avanzas a tu ritmo. Cada fase es independiente: no hay que contratarlo todo de golpe.</p>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="num">1</div>
+        <h3>Asistente de WhatsApp</h3>
+        <p>Responde automáticamente las preguntas más frecuentes de tus clientes: horarios, precios, servicios. Disponible a cualquier hora, también cuando estás cerrado.</p>
+        <ul>
+          <li>Configurado con tu horario y tarifas reales</li>
+          <li>Tono adaptado a tu negocio</li>
+          <li>Deriva a ti cuando hace falta un humano</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="num">2</div>
+        <h3>Reservas y calendario</h3>
+        <p>El asistente agenda las citas solo, consultando tu disponibilidad real, y las añade a un calendario que puedes consultar desde tu móvil en cualquier momento.</p>
+        <ul>
+          <li>Sincronizado con Google Calendar</li>
+          <li>El cliente puede cancelar él mismo</li>
+          <li>Sin dobles reservas ni confusiones</li>
+        </ul>
+        <span class="tag">Se añade sobre la fase 1</span>
+      </div>
+      <div class="service-card">
+        <div class="num">3</div>
+        <h3>Web para tu negocio</h3>
+        <p>Una página sencilla y cuidada donde tus clientes ven tus servicios, precios y horario, y pueden escribirte directamente por WhatsApp.</p>
+        <ul>
+          <li>Adaptada a móvil</li>
+          <li>Pensada para que te encuentren en Google</li>
+          <li>Ideal si aún no tienes presencia online</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="num">4</div>
+        <h3>Contenido y redes</h3>
+        <p>Gestión de tus publicaciones en Instagram: planificación, diseño y textos, para mantener tus redes activas sin que tengas que dedicarles tiempo.</p>
+        <ul>
+          <li>Calendario de contenido mensual</li>
+          <li>Fotos que ya tengas, editadas y con diseño</li>
+          <li>Pensado para negocios con equipo pequeño</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona">
+  <div class="wrap">
+    <span class="eyebrow">Proceso</span>
+    <h2>Cómo trabajamos juntos</h2>
+    <p class="section-lead">De la primera conversación a tener el asistente funcionando, sin que tengas que preocuparte de nada técnico.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="stepnum">01</div>
+        <h3>Hablamos</h3>
+        <p>Te enseño cómo funciona con una demo real, sin compromiso.</p>
+      </div>
+      <div class="step">
+        <div class="stepnum">02</div>
+        <h3>Lo configuro</h3>
+        <p>Cargo tus horarios, servicios y precios reales en el asistente.</p>
+      </div>
+      <div class="step">
+        <div class="stepnum">03</div>
+        <h3>Lo probamos</h3>
+        <p>Revisamos juntos que todo responda tal y como quieres.</p>
+      </div>
+      <div class="step">
+        <div class="stepnum">04</div>
+        <h3>Ya funciona</h3>
+        <p>Se conecta a tu WhatsApp y empieza a atender solo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="precios">
+  <div class="wrap">
+    <span class="eyebrow">Precios</span>
+    <h2>Precio de lanzamiento para los primeros negocios</h2>
+    <p class="section-lead">Pago único de configuración, sin permanencia después. El acompañamiento y ajustes van aparte, solo si los necesitas.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="plan-name">Asistente básico</div>
+        <div class="plan-desc">Responde preguntas frecuentes por WhatsApp</div>
+        <div class="price">150–250€</div>
+        <div class="price-note">pago único</div>
+        <ul>
+          <li>Horarios, servicios y precios</li>
+          <li>Disponible 24/7</li>
+          <li>Configuración incluida</li>
+        </ul>
+        <a class="btn-primary" href="https://wa.me/34628540580" target="_blank" rel="noopener">Empezar</a>
+      </div>
+      <div class="price-card featured">
+        <span class="badge">Más elegido</span>
+        <div class="plan-name">Asistente + Reservas</div>
+        <div class="plan-desc">Agenda y gestiona citas solo</div>
+        <div class="price">300–450€</div>
+        <div class="price-note">pago único · mantenimiento opcional desde 60€/mes</div>
+        <ul>
+          <li>Todo lo del plan básico</li>
+          <li>Calendario sincronizado</li>
+          <li>Cancelaciones automáticas</li>
+        </ul>
+        <a class="btn-primary" href="https://wa.me/34628540580" target="_blank" rel="noopener">Empezar</a>
+      </div>
+      <div class="price-card">
+        <div class="plan-name">A medida</div>
+        <div class="plan-desc">Web, redes y automatización completa</div>
+        <div class="price">Consultar</div>
+        <div class="price-note">según necesidades</div>
+        <ul>
+          <li>Web para tu negocio</li>
+          <li>Gestión de redes sociales</li>
+          <li>Automatizaciones internas</li>
+        </ul>
+        <a class="btn-primary" href="https://wa.me/34628540580" target="_blank" rel="noopener">Hablemos</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Preguntas frecuentes</span>
+    <h2>Dudas habituales</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3>¿Necesito saber de tecnología para usarlo?</h3>
+        <p>No. Yo me encargo de toda la configuración. Tú solo usas WhatsApp y tu calendario, tal como ya lo haces hoy.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Sustituye la atención personal?</h3>
+        <p>No, la complementa. El asistente resuelve lo repetitivo (horarios, disponibilidad, reservas), y tú sigues atendiendo directamente cuando quieras o haga falta.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Hay permanencia?</h3>
+        <p>No. El pago de configuración es único. El mantenimiento posterior es opcional, mes a mes, sin ataduras.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Y si algo falla?</h3>
+        <p>Tienes contacto directo conmigo, no es un producto que compras y desaparece. Reviso y ajusto lo que necesites.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contacto">
+  <div class="wrap">
+    <h2>Hablemos de tu negocio</h2>
+    <p>Cuéntame cómo trabajas ahora y te enseño, sin compromiso, cómo quedaría tu asistente.</p>
+    <a class="btn-primary" href="https://wa.me/34628540580" target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+  </div>
+</section>
+
+<section class="legal" id="legal">
+  <div class="wrap">
+    <span class="eyebrow">Información legal</span>
+    <h2 style="font-size:30px;margin-bottom:36px;">Privacidad y condiciones</h2>
+
+    <details class="legal-item" id="legal-privacidad">
+      <summary>Política de Privacidad <span class="chev">+</span></summary>
+      <div class="legal-body">
+        <h3>1. Responsable del tratamiento</h3>
+        <p>Pau Automatizaciones (en adelante, "nosotros") es responsable del tratamiento de los datos personales que se recogen a través de este sitio web y del canal de WhatsApp asociado.</p>
+
+        <h3>2. Qué datos recogemos</h3>
+        <ul>
+          <li>Datos de contacto que nos facilites voluntariamente al escribirnos por WhatsApp o por el formulario de contacto: nombre, número de teléfono y el contenido de tus mensajes.</li>
+          <li>Datos técnicos básicos de navegación, si el sitio los recoge de forma automática.</li>
+        </ul>
+
+        <h3>3. Con qué finalidad tratamos tus datos</h3>
+        <ul>
+          <li>Responder a tus consultas sobre nuestros servicios.</li>
+          <li>Gestionar la relación comercial en caso de contratar alguno de nuestros servicios.</li>
+          <li>Configurar y prestar el servicio de asistente automatizado de WhatsApp, en caso de ser cliente.</li>
+        </ul>
+
+        <h3>4. Base legal</h3>
+        <p>El tratamiento se basa en tu consentimiento, otorgado al iniciar una conversación con nosotros o al rellenar el formulario de contacto, y en la ejecución de la relación contractual en caso de contratar un servicio.</p>
+
+        <h3>5. Con quién compartimos tus datos</h3>
+        <p>Para prestar el servicio, utilizamos las siguientes plataformas de terceros, que actúan como encargados del tratamiento:</p>
+        <ul>
+          <li><strong>Meta / WhatsApp Business Platform</strong>, para la mensajería.</li>
+          <li><strong>Google Calendar</strong>, para la gestión de citas, cuando el servicio contratado lo incluye.</li>
+          <li><strong>Proveedores de alojamiento (hosting)</strong>, para el funcionamiento técnico del asistente y del sitio web.</li>
+        </ul>
+        <p>No vendemos ni cedemos tus datos a terceros con fines comerciales ajenos a la prestación del servicio.</p>
+
+        <h3>6. Cuánto tiempo conservamos tus datos</h3>
+        <p>Conservamos los datos de contacto mientras exista una relación comercial activa, y durante los plazos legalmente exigibles a efectos fiscales y administrativos.</p>
+
+        <h3>7. Tus derechos</h3>
+        <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad de tus datos escribiéndonos directamente por WhatsApp.</p>
+
+        <h3>8. Cambios en esta política</h3>
+        <p>Podemos actualizar este documento para reflejar cambios en el servicio o en la normativa aplicable. La fecha de la última actualización aparece al inicio de este apartado.</p>
+      </div>
+    </details>
+
+    <details class="legal-item" id="legal-terminos">
+      <summary>Términos y Condiciones <span class="chev">+</span></summary>
+      <div class="legal-body">
+        <h3>1. Objeto</h3>
+        <p>Pau Automatizaciones presta servicios de configuración de asistentes automatizados de WhatsApp, integración con calendarios, diseño web y gestión de contenido para redes sociales, dirigidos a pequeños negocios.</p>
+
+        <h3>2. Naturaleza del servicio</h3>
+        <p>El servicio consiste en la configuración de herramientas de mensajería y automatización sobre plataformas de terceros (Meta / WhatsApp Business Platform, Google Calendar, y proveedores de alojamiento web). Pau Automatizaciones no es propietario de dichas plataformas y su funcionamiento depende, en parte, de la disponibilidad y condiciones de esos terceros.</p>
+
+        <h3>3. Precio y forma de pago</h3>
+        <ul>
+          <li>La configuración inicial del asistente se cobra como pago único, según el alcance acordado con cada cliente.</li>
+          <li>El mantenimiento posterior es opcional y se factura, en su caso, de forma mensual, sin permanencia mínima.</li>
+          <li>Los precios vigentes en el momento de la contratación son los acordados expresamente con el cliente, pudiendo diferir de los precios orientativos mostrados en este sitio web.</li>
+        </ul>
+
+        <h3>4. Cancelación</h3>
+        <p>El cliente puede dejar de contratar el servicio de mantenimiento en cualquier momento, sin penalización, avisando con antelación razonable. El pago único de configuración inicial no es reembolsable una vez prestado el servicio.</p>
+
+        <h3>5. Obligaciones del cliente</h3>
+        <ul>
+          <li>Facilitar información veraz sobre horarios, servicios y precios de su negocio para la correcta configuración del asistente.</li>
+          <li>Disponer de una cuenta de WhatsApp Business válida y, en su caso, de una cuenta de Google Calendar, para la integración del servicio.</li>
+        </ul>
+
+        <h3>6. Limitación de responsabilidad</h3>
+        <p>Pau Automatizaciones pone los medios razonables para que el servicio funcione correctamente, pero no puede garantizar la disponibilidad continua e ininterrumpida de plataformas de terceros (WhatsApp, Google, proveedores de alojamiento), cuyo funcionamiento escapa a su control directo.</p>
+
+        <h3>7. Propiedad</h3>
+        <p>La configuración específica realizada para cada cliente puede ser utilizada libremente por este mientras dure la relación de servicio. El código y las herramientas generales de automatización desarrolladas por Pau Automatizaciones no se ceden en propiedad, salvo acuerdo expreso en contrario.</p>
+
+        <h3>8. Legislación aplicable</h3>
+        <p>Estas condiciones se rigen por la legislación española. Cualquier controversia se intentará resolver de buena fe entre las partes antes de acudir a la vía judicial correspondiente.</p>
+
+        <h3>9. Contacto</h3>
+        <p>Para cualquier duda sobre estas condiciones, puedes escribirnos directamente por WhatsApp desde el botón de contacto de este sitio.</p>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <span>Pau Automatizaciones © 2026</span>
+    <span style="display:flex;gap:20px;flex-wrap:wrap;">
+      <a href="https://www.instagram.com/pau.automatizaciones/" target="_blank" rel="noopener" style="text-decoration:underline;">Instagram</a>
+      <a href="#legal-privacidad" style="text-decoration:underline;" onclick="document.getElementById('legal-privacidad').open=true;">Política de privacidad</a>
+      <a href="#legal-terminos" style="text-decoration:underline;" onclick="document.getElementById('legal-terminos').open=true;">Términos y condiciones</a>
+    </span>
+    <span>Barcelona · Maresme</span>
+  </div>
+</footer>
+
+</body>
+</html>
