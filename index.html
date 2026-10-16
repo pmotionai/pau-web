@@ -1,917 +1,527 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PmotionIA — Automatización con IA para negocios locales</title>
-<meta name="description" content="Diseño y monto asistentes de WhatsApp con IA que responden preguntas y agendan citas solos, 24 horas al día, para negocios locales.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PmotionIA — CRM y asistentes con IA para fisios, inmobiliarias y gestorías</title>
+<meta name="description" content="Monto el sistema que contesta llamadas y WhatsApps, agenda citas y te avisa de a quién llamar. CRM, asistentes de WhatsApp y de voz con IA para negocios del Maresme y Barcelona.">
 <meta name="theme-color" content="#20402F">
-<meta property="og:title" content="PmotionIA — Automatización con IA para negocios locales">
-<meta property="og:description" content="Asistentes de WhatsApp que responden preguntas, agendan citas y las gestionan solos, 24 horas al día.">
+<meta property="og:title" content="PmotionIA — CRM y asistentes con IA para fisios, inmobiliarias y gestorías">
+<meta property="og:description" content="El sistema que contesta llamadas y WhatsApps, agenda citas y te avisa de a quién llamar.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://pmotionia.com/">
+
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%2320402F'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='white' text-anchor='middle'%3EP%3C/text%3E%3Ccircle cx='47' cy='19' r='5' fill='%237FBF9E'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap">
 <style>
-  :root{
-    --cream:#F7F3EC;
-    --cream-2:#EFE9DC;
-    --ink:#1C1917;
-    --ink-soft:#4A453E;
-    --bottle:#20402F;
-    --bottle-light:#4A6B58;
-    --mint:#7FBF9E;
-    --line:#DCD5C4;
-    --shadow-sm:0 6px 16px -8px rgba(28,25,23,0.18);
-    --shadow-lg:0 24px 48px -18px rgba(28,25,23,0.22);
-    --ease:cubic-bezier(.2,.7,.3,1);
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;scrollbar-color:var(--bottle-light) var(--cream-2);}
-  ::selection{background:var(--mint);color:var(--bottle);}
-  ::-webkit-scrollbar{width:11px;}
-  ::-webkit-scrollbar-track{background:var(--cream-2);}
-  ::-webkit-scrollbar-thumb{background:var(--bottle-light);border-radius:20px;border:2.5px solid var(--cream-2);}
-  ::-webkit-scrollbar-thumb:hover{background:var(--bottle);}
-  body{
-    background:var(--cream);
-    color:var(--ink);
-    font-family:'Work Sans',sans-serif;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-    position:relative;
-  }
-  /* Fine paper grain — adds depth to flat colour fields without touching the palette */
-  body::before{
-    content:"";position:fixed;inset:0;z-index:1000;pointer-events:none;
-    opacity:0.035;mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-  h1,h2,h3{
-    font-family:'Fraunces',serif;
-    font-weight:500;
-    letter-spacing:-0.01em;
-    color:var(--ink);
-  }
-  a{color:inherit;text-decoration:none;}
-  img{max-width:100%;display:block;}
-  .wrap{max-width:1100px;margin:0 auto;padding:0 28px;}
-  .eyebrow{
-    font-size:13px;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--bottle-light);
-    font-weight:600;
-    margin-bottom:14px;
-    display:flex;
-    align-items:center;
-    gap:9px;
-  }
-  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--mint);flex-shrink:0;}
+/* Layout: cabecera translúcida → hero con «la centralita» (3 piezas que se deslizan) → escenas por sector → servicios → proceso → precios → dudas → contacto.
+   Movimiento según la skill apple-design: respuesta al pulsar, muelles interrumpibles, inercia y efecto goma. Marca PmotionIA: verde bosque + menta. */
+:root{
+  --bg:#F5F7F3; --paper:#FFFFFF; --ink:#14231B; --muted:#5A6A61; --line:#DCE3DB; --soft:#EAF0E8;
+  --green:#20402F; --green-2:#2F5A44; --mint:#7FBF9E; --mint-soft:#DCEFE4; --on-green:#F5F7F3;
+  --wa:#1F8F55; --warn:#9A6200;
+  --f-display:"Fraunces", Georgia, "Times New Roman", serif;
+  --f-body:"Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --shadow:0 1px 2px rgba(20,35,27,.06), 0 12px 32px rgba(20,35,27,.08);
+  --glass:rgba(245,247,243,.72);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0F1713; --paper:#16211B; --ink:#E7EEE9; --muted:#9DB0A5; --line:#26352D; --soft:#1C2A22;
+  --green:#7FBF9E; --green-2:#9ED1B6; --mint:#7FBF9E; --mint-soft:#1F3529; --on-green:#0F1713;
+  --wa:#4CC58A; --warn:#E5B04A; --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.35); --glass:rgba(15,23,19,.72); color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#0F1713; --paper:#16211B; --ink:#E7EEE9; --muted:#9DB0A5; --line:#26352D; --soft:#1C2A22;
+  --green:#7FBF9E; --green-2:#9ED1B6; --mint:#7FBF9E; --mint-soft:#1F3529; --on-green:#0F1713;
+  --wa:#4CC58A; --warn:#E5B04A; --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.35); --glass:rgba(15,23,19,.72); color-scheme:dark; }
 
-  :focus-visible{outline:2px solid var(--bottle);outline-offset:3px;border-radius:2px;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:76px}
+body{margin:0; background:var(--bg); color:var(--ink); font:400 17px/1.6 var(--f-body); -webkit-font-smoothing:antialiased}
+img{max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--f-display); font-weight:600; margin:0; text-wrap:balance}
+h1{font-size:clamp(2.3rem, 6vw, 4rem); line-height:1.04; letter-spacing:-.025em}
+h2{font-size:clamp(1.7rem, 3.6vw, 2.5rem); line-height:1.1; letter-spacing:-.02em}
+h3{font-size:1.2rem; line-height:1.25; letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:1120px; margin:0 auto; padding-inline:20px}
+.eyebrow{font:600 .78rem/1.2 var(--f-body); letter-spacing:.12em; text-transform:uppercase; color:var(--green-2)}
+.lead{font-size:1.15rem; color:var(--muted); max-width:56ch}
+.muted{color:var(--muted)}
+section{padding-block:clamp(56px, 9vw, 104px)}
+:focus-visible{outline:2px solid var(--mint); outline-offset:3px; border-radius:8px}
 
-  .skip-link{
-    position:absolute;left:16px;top:-60px;
-    background:var(--bottle);color:#fff;
-    padding:10px 18px;border-radius:4px;font-size:14px;font-weight:500;
-    z-index:200;transition:top .2s var(--ease);
-  }
-  .skip-link:focus{top:16px;}
+/* botones: responden al pulsar */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; border:0; border-radius:14px; padding:14px 22px; font:600 1rem/1 var(--f-body); text-decoration:none; cursor:pointer;
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent; transition:transform 100ms ease-out, background-color .15s, box-shadow .15s}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--green); color:var(--on-green); box-shadow:0 8px 20px rgba(32,64,47,.22)}
+.btn.primary:hover{background:var(--green-2)}
+.btn.ghost{background:transparent; color:var(--ink); border:1.5px solid var(--line)}
+.btn.ghost:hover{border-color:var(--green-2)}
+.btn svg{width:20px; height:20px; flex:none}
 
-  /* Header */
-  header{
-    padding:22px 0;
-    position:sticky;
-    top:0;
-    background:rgba(247,243,236,0.92);
-    backdrop-filter:blur(6px);
-    z-index:100;
-    border-bottom:1px solid var(--line);
-    transition:padding .25s var(--ease), box-shadow .25s var(--ease);
-  }
-  header.scrolled{padding:14px 0;box-shadow:var(--shadow-sm);}
-  header .wrap{display:flex;justify-content:space-between;align-items:center;}
-  .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:20px;font-weight:600;}
-  .brand .mark{
-    width:34px;height:34px;border-radius:50%;
-    background:var(--bottle);color:#fff;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:18px;position:relative;
-    flex-shrink:0;
-    box-shadow:0 0 0 3px rgba(127,191,158,0.18);
-  }
-  .brand .mark::after{
-    content:"";position:absolute;top:2px;right:3px;
-    width:5px;height:5px;border-radius:50%;background:var(--mint);
-  }
-  nav{display:flex;gap:30px;font-size:15px;}
-  nav a{opacity:0.75;transition:opacity .2s;position:relative;padding-bottom:4px;}
-  nav a:hover{opacity:1;}
-  nav a.active{opacity:1;}
-  nav a.active::after{
-    content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
-    background:var(--mint);border-radius:2px;
-  }
-  .header-actions{display:flex;align-items:center;gap:18px;}
-  .icon-link{opacity:0.8;transition:opacity .2s, transform .2s var(--ease);display:flex;}
-  .icon-link:hover{opacity:1;transform:translateY(-1px);}
-  .btn-wa{
-    background:var(--bottle);
-    color:#fff;
-    padding:11px 22px;
-    border-radius:3px;
-    font-size:14px;
-    font-weight:500;
-    white-space:nowrap;
-    transition:background .2s, transform .2s var(--ease);
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-  }
-  .wa-ico{flex-shrink:0;}
-  .btn-wa:hover{background:#152e21;transform:translateY(-1px);}
+/* cabecera: material translúcido sobre el contenido */
+.top{position:sticky; top:0; z-index:40; padding-top:env(safe-area-inset-top,0px); background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(180%); backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid transparent; transition:border-color .2s}
+.top.scrolled{border-bottom-color:var(--line)}
+.top .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:64px}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; font:600 1.15rem var(--f-display); letter-spacing:-.01em}
+.brand i{width:30px; height:30px; border-radius:50%; background:var(--green); color:var(--on-green); display:grid; place-items:center; font:600 1rem var(--f-display); font-style:normal; position:relative}
+.brand i::after{content:""; position:absolute; width:8px; height:8px; border-radius:50%; background:var(--mint); top:3px; right:2px}
+nav.links{display:flex; gap:26px; font-size:.95rem}
+nav.links a{text-decoration:none; color:var(--muted)} nav.links a:hover{color:var(--ink)}
+.top .btn{padding:10px 16px; font-size:.92rem}
+@media (max-width:820px){ nav.links{display:none} }
 
-  /* Mobile nav toggle */
-  .nav-toggle{
-    display:none;
-    width:38px;height:38px;
-    border:none;background:none;cursor:pointer;
-    flex-direction:column;justify-content:center;align-items:center;gap:6px;
-    flex-shrink:0;
-  }
-  .nav-toggle span{
-    display:block;width:22px;height:2px;background:var(--ink);
-    transition:transform .25s var(--ease), opacity .2s var(--ease);
-  }
-  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(8px) rotate(45deg);}
-  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
-  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+/* hero */
+.hero{padding-block:clamp(36px, 7vw, 84px) clamp(48px, 8vw, 96px)}
+.hero .wrap{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:clamp(28px,5vw,64px); align-items:center}
+.hero .copy{display:flex; flex-direction:column; gap:22px; min-width:0}
+.hero .ctas{display:flex; flex-wrap:wrap; gap:12px}
+.ticks{display:flex; flex-wrap:wrap; gap:8px 18px; font-size:.92rem; color:var(--muted); padding:0; margin:0; list-style:none}
+.ticks li::before{content:"✓"; color:var(--wa); font-weight:600; margin-right:6px}
+@media (max-width:900px){ .hero .wrap{grid-template-columns:1fr} }
 
-  .mobile-drawer{
-    position:fixed;inset:0;
-    background:var(--cream);
-    z-index:99;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;
-    transform:translateY(-100%);
-    transition:transform .35s var(--ease);
-  }
-  .mobile-drawer.open{transform:translateY(0);}
-  .mobile-drawer a{font-family:'Fraunces',serif;font-size:26px;}
-  .mobile-drawer .btn-primary{margin-top:10px;}
+/* la centralita: selector de sector + 3 piezas que se deslizan */
+.board{display:flex; flex-direction:column; gap:14px; min-width:0}
+.seg{position:relative; display:flex; background:var(--soft); border-radius:999px; padding:4px; align-self:flex-start; max-width:100%}
+.seg .ind{position:absolute; top:4px; bottom:4px; left:0; width:0; border-radius:999px; background:var(--paper); box-shadow:0 1px 3px rgba(20,35,27,.12); will-change:transform,width}
+.seg button{position:relative; z-index:1; border:0; background:none; font:500 .92rem var(--f-body); color:var(--muted); padding:9px 16px; border-radius:999px; cursor:pointer; touch-action:manipulation; transition:color .2s; white-space:nowrap}
+.seg button[aria-pressed="true"]{color:var(--ink)}
+.viewport{position:relative; overflow:hidden; border-radius:26px; touch-action:pan-y; cursor:grab; user-select:none; -webkit-user-select:none}
+.viewport:active{cursor:grabbing}
+.track{display:flex; will-change:transform}
+.slide{flex:0 0 100%; padding:4px}
+.panel{background:var(--paper); border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow); padding:20px; min-height:360px; display:flex; flex-direction:column; gap:12px}
+.panel .head{display:flex; align-items:center; gap:10px}
+.panel .ico{width:38px; height:38px; border-radius:11px; display:grid; place-items:center; background:var(--mint-soft); color:var(--green); flex:none}
+.panel .ico svg{width:20px; height:20px}
+.panel .head b{display:block; font-weight:600}
+.panel .head small{color:var(--muted); font-size:.82rem}
+.panel .tag{margin-left:auto; font:600 .7rem var(--f-body); letter-spacing:.08em; text-transform:uppercase; color:var(--green-2); background:var(--mint-soft); padding:5px 9px; border-radius:999px}
+.bub{max-width:86%; padding:10px 13px; border-radius:16px; font-size:.95rem; line-height:1.4}
+.bub.in{background:var(--soft); border-bottom-left-radius:5px; align-self:flex-start}
+.bub.out{background:var(--green); color:var(--on-green); border-bottom-right-radius:5px; align-self:flex-end}
+.bub small{display:block; opacity:.7; font-size:.72rem; margin-top:3px}
+.wave{display:flex; align-items:center; gap:3px; height:28px}
+.wave i{width:3px; border-radius:2px; background:var(--mint)}
+.line{display:flex; gap:10px; font-size:.93rem}
+.line b{flex:0 0 82px; color:var(--muted); font-weight:500}
+.card{border:1px solid var(--line); border-radius:14px; padding:12px 14px; display:flex; flex-direction:column; gap:4px}
+.card .row{display:flex; justify-content:space-between; gap:10px; align-items:center}
+.chip{font:600 .72rem var(--f-body); padding:4px 9px; border-radius:999px; background:var(--mint-soft); color:var(--green)}
+.chip.hot{background:rgba(222,120,60,.14); color:#B4541E}
+.alert{display:flex; gap:10px; align-items:center; background:var(--soft); border-radius:14px; padding:10px 12px; font-size:.92rem}
+.dots{display:flex; justify-content:center; gap:8px}
+.dots button{width:28px; height:28px; border:0; background:none; padding:0; display:grid; place-items:center; cursor:pointer; touch-action:manipulation}
+.dots button i{width:8px; height:8px; border-radius:50%; background:var(--line); transition:background .2s, width .2s}
+.dots button[aria-current="true"] i{background:var(--green); width:22px; border-radius:4px}
+.hint{text-align:center; font-size:.82rem; color:var(--muted)}
 
-  /* Hero */
-  .hero{
-    padding:clamp(64px,10vw,110px) 0 clamp(56px,8vw,110px);
-    border-bottom:1px solid var(--line);
-    position:relative;
-    overflow:hidden;
-  }
-  .hero::before{
-    content:"";position:absolute;top:-180px;right:-160px;
-    width:480px;height:480px;border-radius:50%;
-    background:radial-gradient(circle,rgba(127,191,158,0.16),rgba(127,191,158,0) 70%);
-    pointer-events:none;
-  }
-  .hero .inner{
-    display:grid;
-    grid-template-columns:1.15fr 0.85fr;
-    gap:60px;
-    align-items:center;
-    position:relative;
-  }
-  .hero h1{
-    font-size:clamp(34px,5vw,58px);
-    line-height:1.08;
-    margin-bottom:24px;
-  }
-  .hero h1 em{font-style:normal;color:var(--bottle);}
-  .hero p.lead{
-    font-size:19px;
-    color:var(--ink-soft);
-    max-width:42ch;
-    margin-bottom:34px;
-  }
-  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
-  .btn-primary{
-    background:var(--bottle);
-    color:#fff;
-    padding:15px 28px;
-    font-size:15px;
-    font-weight:500;
-    border-radius:3px;
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    transition:background .2s, transform .2s var(--ease), box-shadow .2s var(--ease);
-  }
-  .btn-primary:hover{background:#152e21;transform:translateY(-2px);box-shadow:var(--shadow-sm);}
-  .btn-primary:active{transform:translateY(0);}
-  .btn-ghost{
-    font-size:15px;
-    font-weight:500;
-    color:var(--ink);
-    border-bottom:1px solid var(--ink);
-    padding-bottom:2px;
-  }
-  .hero-card{
-    background:linear-gradient(165deg,#254a36,var(--bottle) 45%);
-    border-radius:26px;
-    padding:14px;
-    color:#fff;
-    box-shadow:var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.06) inset;
-    position:relative;
-  }
-  .phone-status{
-    display:flex;align-items:center;justify-content:flex-end;gap:6px;
-    padding:8px 10px 14px;
-  }
-  .phone-status .sig{display:flex;align-items:flex-end;gap:2px;height:8px;}
-  .phone-status .sig i{display:block;width:3px;background:rgba(255,255,255,0.85);border-radius:1px;}
-  .phone-status .sig i:nth-child(1){height:40%;}
-  .phone-status .sig i:nth-child(2){height:65%;}
-  .phone-status .sig i:nth-child(3){height:85%;}
-  .phone-status .sig i:nth-child(4){height:100%;}
-  .phone-status .batt{width:20px;height:10px;border:1.4px solid rgba(255,255,255,0.85);border-radius:2.5px;position:relative;}
-  .phone-status .batt::after{content:"";position:absolute;right:-3.5px;top:2.5px;width:2px;height:5px;background:rgba(255,255,255,0.85);border-radius:0 1px 1px 0;}
-  .phone-status .batt::before{content:"";position:absolute;inset:1.5px;left:1.5px;width:65%;background:var(--mint);border-radius:1px;}
-  .hero-card .phone-bar{
-    display:flex;align-items:center;gap:11px;
-    padding:2px 6px 16px;margin-bottom:16px;
-    border-bottom:1px solid rgba(255,255,255,0.15);
-    font-size:14px;font-weight:500;
-  }
-  .hero-card .wa-avatar{
-    width:32px;height:32px;border-radius:50%;flex-shrink:0;
-    background:var(--mint);color:var(--bottle);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-weight:600;font-size:15px;
-  }
-  .msgs{display:flex;flex-direction:column;gap:10px;padding:0 6px 6px;}
-  .msg{max-width:82%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.4;opacity:0;transform:translateY(8px);animation:msgIn .5s var(--ease) forwards;}
-  .msg:nth-child(1){animation-delay:.15s;}
-  .msg:nth-child(2){animation-delay:.55s;}
-  .msg:nth-child(3){animation-delay:.95s;}
-  .msg:nth-child(4){animation-delay:1.35s;}
-  .msg:nth-child(5){animation-delay:1.75s;}
-  @keyframes msgIn{to{opacity:1;transform:translateY(0);}}
-  .msg.bot{background:rgba(255,255,255,0.1);align-self:flex-start;border-bottom-left-radius:3px;}
-  .msg.user{background:var(--mint);color:var(--bottle);align-self:flex-end;border-bottom-right-radius:3px;font-weight:500;}
+/* escenas */
+.scenes{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:34px}
+.scene{background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:22px; display:flex; flex-direction:column; gap:10px}
+.scene .when{font:600 .78rem var(--f-body); letter-spacing:.08em; text-transform:uppercase; color:var(--warn)}
+.scene p{color:var(--muted)}
+.scene .fix{margin-top:auto; padding-top:12px; border-top:1px dashed var(--line); color:var(--ink); font-size:.95rem}
+@media (max-width:860px){ .scenes{grid-template-columns:1fr} }
 
-  /* Trust bar */
-  .trust{
-    padding:28px 0;
-    border-bottom:1px solid var(--line);
-    display:flex;
-    gap:48px;
-    justify-content:center;
-    flex-wrap:wrap;
-    font-size:14px;
-    color:var(--ink-soft);
-  }
-  .trust span{display:flex;align-items:center;gap:8px;}
-  .trust .dot2{width:6px;height:6px;background:var(--mint);border-radius:50%;}
+/* servicios */
+.svc{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:34px}
+.svc article{background:var(--paper); border:1px solid var(--line); border-radius:22px; padding:24px; display:flex; flex-direction:column; gap:12px}
+.svc ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:7px; font-size:.95rem; color:var(--muted)}
+.svc li{display:flex; gap:8px} .svc li::before{content:"✓"; color:var(--wa); font-weight:600}
+.svc .kw{margin-top:auto; font-size:.85rem; color:var(--muted)}
+.svc .kw b{color:var(--green-2)}
+.extra{margin-top:16px; display:flex; flex-wrap:wrap; gap:10px 24px; align-items:center; background:var(--soft); border-radius:18px; padding:16px 20px; font-size:.95rem}
+@media (max-width:900px){ .svc{grid-template-columns:1fr} }
 
-  /* Section generic */
-  section{padding:clamp(60px,9vw,100px) 0;border-bottom:1px solid var(--line);}
-  section h2{font-size:clamp(26px,4vw,38px);max-width:20ch;margin-bottom:20px;}
-  section p.section-lead{font-size:17px;color:var(--ink-soft);max-width:56ch;margin-bottom:56px;}
+/* proceso (es una secuencia real: va numerado) */
+.steps{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-top:34px; counter-reset:s}
+.steps li{list-style:none; border-top:2px solid var(--green); padding-top:16px; display:flex; flex-direction:column; gap:6px}
+.steps li::before{counter-increment:s; content:"0" counter(s); font:600 .85rem var(--f-body); color:var(--green-2); letter-spacing:.06em}
+.steps{padding:0}
+@media (max-width:820px){ .steps{grid-template-columns:1fr 1fr} }
+@media (max-width:480px){ .steps{grid-template-columns:1fr} }
 
-  /* Reveal-on-scroll */
-  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease),transform .6s var(--ease);}
-  .reveal.visible{opacity:1;transform:translateY(0);}
+/* precios */
+.prices{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:34px; align-items:stretch}
+.price{background:var(--paper); border:1px solid var(--line); border-radius:22px; padding:24px; display:flex; flex-direction:column; gap:12px}
+.price.main{border:2px solid var(--green)}
+.price .amt{font:600 2rem/1.1 var(--f-display); letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+.price .amt small{font:500 .9rem var(--f-body); color:var(--muted); letter-spacing:0}
+.price ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:7px; font-size:.95rem; color:var(--muted)}
+.price li::before{content:"✓"; color:var(--wa); font-weight:600; margin-right:8px}
+.price .btn{margin-top:auto}
+.badge{align-self:flex-start; font:600 .72rem var(--f-body); letter-spacing:.06em; text-transform:uppercase; background:var(--green); color:var(--on-green); padding:5px 10px; border-radius:999px}
+@media (max-width:900px){ .prices{grid-template-columns:1fr} }
 
-  /* Services */
-  .service-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-  }
-  .service-card{
-    background:var(--cream);
-    padding:40px;
-    transition:background .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease);
-    position:relative;
-  }
-  .service-card:hover{
-    background:#fff;
-    transform:translateY(-3px);
-    box-shadow:var(--shadow-sm);
-    z-index:1;
-  }
-  .service-card .num{
-    font-family:'Fraunces',serif;
-    font-size:15px;
-    color:var(--mint);
-    background:var(--bottle);
-    width:30px;height:30px;
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    margin-bottom:24px;
-    transition:transform .25s var(--ease);
-  }
-  .service-card:hover .num{transform:scale(1.12);}
-  .service-card h3{font-size:23px;margin-bottom:12px;}
-  .service-card p{font-size:15px;color:var(--ink-soft);margin-bottom:18px;}
-  .service-card ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
-  .service-card li{font-size:14px;color:var(--ink-soft);display:flex;gap:10px;align-items:flex-start;}
-  .service-card li::before{content:"";width:5px;height:5px;background:var(--mint);border-radius:50%;margin-top:8px;flex-shrink:0;}
-  .service-card .tag{
-    display:inline-block;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:0.05em;
-    text-transform:uppercase;
-    color:var(--bottle-light);
-    margin-top:16px;
-  }
+/* dudas */
+.faq{margin-top:28px; display:flex; flex-direction:column; gap:10px; max-width:780px}
+.faq details{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:0 18px}
+.faq summary{cursor:pointer; list-style:none; padding:16px 0; font-weight:600; display:flex; justify-content:space-between; gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+"; color:var(--green-2); font-size:1.3rem; line-height:1; transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 16px; color:var(--muted)}
 
-  /* How it works */
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;position:relative;}
-  .steps::before{
-    content:"";position:absolute;top:17px;left:0;right:0;height:1px;
-    background:var(--line);z-index:-1;
-  }
-  @media (max-width:860px){.steps::before{display:none;}}
-  .step{position:relative;padding-top:28px;transition:transform .25s var(--ease);}
-  .step:hover{transform:translateY(-3px);}
-  .step .stepnum{
-    font-family:'Fraunces',serif;
-    font-size:44px;
-    color:var(--line);
-    position:absolute;top:-10px;left:0;
-    transition:color .25s var(--ease);
-  }
-  .step:hover .stepnum{color:var(--mint);}
-  .step h3{font-size:18px;margin-bottom:8px;}
-  .step p{font-size:14px;color:var(--ink-soft);}
+/* contacto */
+.cta{background:var(--green); color:var(--on-green); border-radius:30px; padding:clamp(32px,6vw,64px); display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:28px; align-items:center}
+.cta .lead{color:var(--on-green); opacity:.85}
+.cta .btn.primary{background:var(--on-green); color:var(--green); box-shadow:none}
+.cta .contact{display:flex; flex-direction:column; gap:10px; font-size:.95rem}
+.cta .contact span{opacity:.8}
+@media (max-width:820px){ .cta{grid-template-columns:1fr} }
 
-  /* Pricing */
-  .pricing-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:24px;
-  }
-  .price-card{
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:36px 28px;
-    background:#fff;
-    display:flex;
-    flex-direction:column;
-    transition:transform .25s var(--ease), box-shadow .25s var(--ease);
-  }
-  .price-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);}
-  .price-card.featured{
-    background:linear-gradient(165deg,#25492f,var(--bottle) 55%);
-    color:#fff;
-    border-color:var(--bottle);
-    position:relative;
-    z-index:1;
-  }
-  .price-card.featured:hover{box-shadow:var(--shadow-lg);}
-  @media (min-width:861px){
-    .price-card.featured{transform:scale(1.045);}
-    .price-card.featured:hover{transform:scale(1.045) translateY(-4px);}
-  }
-  .price-card .plan-name{font-family:'Fraunces',serif;font-size:22px;margin-bottom:6px;}
-  .price-card .plan-desc{font-size:14px;color:var(--ink-soft);margin-bottom:24px;}
-  .price-card.featured .plan-desc{color:#D6E3DA;}
-  .price-card .price{font-family:'Fraunces',serif;font-size:38px;margin-bottom:4px;}
-  .price-card .price-note{font-size:13px;color:var(--ink-soft);margin-bottom:24px;}
-  .price-card.featured .price-note{color:#B9CDC1;}
-  .price-card ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:28px;flex:1;}
-  .price-card li{font-size:14px;display:flex;gap:10px;align-items:flex-start;}
-  .price-card li::before{content:"✓";color:var(--mint);font-weight:700;flex-shrink:0;}
-  .price-card .btn-primary{justify-content:center;}
-  .price-card.featured .btn-primary{background:#fff;color:var(--bottle);}
-  .price-card.featured .btn-primary:hover{background:#EFEFEF;}
-  .badge{
-    display:inline-block;
-    background:var(--mint);
-    color:var(--bottle);
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:0.05em;
-    text-transform:uppercase;
-    padding:4px 10px;
-    border-radius:20px;
-    margin-bottom:14px;
-    align-self:flex-start;
-  }
+footer{padding-block:40px 56px; font-size:.9rem; color:var(--muted)}
+footer .wrap{display:flex; flex-direction:column; gap:18px}
+footer .legal details{border-top:1px solid var(--line); padding:12px 0}
+footer .legal summary{cursor:pointer; font-weight:600; color:var(--ink)}
+footer .legal h4{margin:14px 0 4px; font:600 .95rem var(--f-body); color:var(--ink)}
+footer .legal p, footer .legal li{max-width:75ch}
+footer .bottom{display:flex; flex-wrap:wrap; gap:8px 20px; justify-content:space-between}
 
-  /* FAQ */
-  .faq-item{
-    border-bottom:1px solid var(--line);
-    padding:26px 0;
-  }
-  .faq-item h3{font-size:18px;margin-bottom:10px;font-weight:600;font-family:'Work Sans',sans-serif;}
-  .faq-item p{font-size:15px;color:var(--ink-soft);max-width:60ch;}
+/* WhatsApp flotante en móvil */
+.fab{position:fixed; right:16px; bottom:calc(16px + env(safe-area-inset-bottom,0px)); z-index:30; width:56px; height:56px; border-radius:50%; background:var(--wa); color:#fff; display:none; place-items:center; box-shadow:0 10px 24px rgba(0,0,0,.2); touch-action:manipulation; transition:transform 100ms ease-out}
+.fab:active{transform:scale(.94)} .fab svg{width:28px; height:28px}
+@media (max-width:820px){ .fab{display:grid} }
 
-  /* CTA */
-  .cta{
-    text-align:center;
-    background:var(--bottle);
-    color:#fff;
-    border-bottom:none;
-    position:relative;
-    overflow:hidden;
-  }
-  .cta::before{
-    content:"";position:absolute;bottom:-200px;left:50%;transform:translateX(-50%);
-    width:600px;height:400px;border-radius:50%;
-    background:radial-gradient(circle,rgba(127,191,158,0.18),rgba(127,191,158,0) 70%);
-    pointer-events:none;
-  }
-  .cta h2{color:#fff;max-width:18ch;margin:0 auto 18px;position:relative;}
-  .cta p{color:#D6E3DA;max-width:48ch;margin:0 auto 34px;font-size:17px;position:relative;}
-  .cta .btn-primary{background:#fff;color:var(--bottle);font-size:16px;padding:17px 32px;position:relative;}
-  .cta .btn-primary:hover{background:#EFEFEF;}
-
-  footer{
-    padding:40px 0;
-    font-size:13px;
-    color:var(--ink-soft);
-  }
-  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-  footer a{text-decoration:underline;text-underline-offset:2px;}
-  footer a:hover{color:var(--ink);}
-  .footer-links{display:flex;gap:20px;flex-wrap:wrap;}
-
-  /* Legal section (accordion) */
-  .legal{
-    padding:70px 0;
-    border-bottom:1px solid var(--line);
-    background:var(--cream-2);
-  }
-  .legal-item{
-    border:1px solid var(--line);
-    border-radius:6px;
-    background:#fff;
-    margin-bottom:16px;
-    overflow:hidden;
-    transition:box-shadow .2s var(--ease);
-  }
-  .legal-item:hover{box-shadow:var(--shadow-sm);}
-  .legal-item summary{
-    cursor:pointer;
-    list-style:none;
-    padding:22px 26px;
-    font-family:'Fraunces',serif;
-    font-size:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-  }
-  .legal-item summary::-webkit-details-marker{display:none;}
-  .legal-item summary .chev{
-    font-family:'Work Sans',sans-serif;
-    font-size:22px;
-    color:var(--bottle-light);
-    transition:transform .2s;
-    flex-shrink:0;
-    margin-left:20px;
-  }
-  .legal-item[open] summary .chev{transform:rotate(45deg);}
-  .legal-body{padding:0 26px 30px;}
-  .legal-body h3{
-    font-family:'Work Sans',sans-serif;
-    font-weight:600;
-    font-size:15.5px;
-    margin-top:22px;
-    margin-bottom:8px;
-    color:var(--ink);
-  }
-  .legal-body p,.legal-body li{font-size:14.5px;color:var(--ink-soft);margin-bottom:10px;}
-  .legal-body ul{padding-left:18px;}
-
-  @media (max-width:860px){
-    .hero .inner,.service-grid,.steps,.pricing-grid{grid-template-columns:1fr;}
-    nav{display:none;}
-    .header-actions .btn-wa{display:none;}
-    .nav-toggle{display:flex;}
-    section{padding:56px 0;}
-  }
-
-  @media (prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto;}
-    *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
-    .msg{opacity:1;transform:none;}
-    .reveal{opacity:1;transform:none;}
-  }
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+@media (prefers-reduced-transparency: reduce){ .top{background:var(--bg); -webkit-backdrop-filter:none; backdrop-filter:none} }
+@media (prefers-contrast: more){ .top{background:var(--bg); border-bottom-color:var(--ink)} .panel,.scene,.price,.svc article{border-color:var(--ink)} }
 </style>
 </head>
 <body>
+<a href="#main" class="sr-only" style="position:absolute;left:-999px">Ir al contenido</a>
 
-<a class="skip-link" href="#main">Ir al contenido</a>
-
-<header id="site-header">
+<header class="top" id="top">
   <div class="wrap">
-    <div class="brand"><span class="mark">P</span> PmotionIA</div>
-    <nav aria-label="Navegación principal">
-      <a href="#servicios">Servicios</a>
-      <a href="#como-funciona">Cómo funciona</a>
-      <a href="#precios">Precios</a>
-      <a href="#contacto">Contacto</a>
+    <a class="brand" href="#"><i>P</i>PmotionIA</a>
+    <nav class="links" aria-label="Secciones">
+      <a href="#servicios">Servicios</a><a href="#como">Cómo trabajo</a><a href="#precios">Precios</a><a href="#dudas">Dudas</a>
     </nav>
-    <div class="header-actions">
-      <a class="icon-link" href="https://www.instagram.com/pau.automatizaciones/" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-      </a>
-      <a class="btn-wa" href="https://wa.me/34684483549" target="_blank" rel="noopener"><svg class="wa-ico" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.2 3.4 5.4 4.7.7.3 1.3.5 1.8.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5-1.3c1.4.8 3.1 1.2 4.9 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3C4.2 15 3.7 13.5 3.7 12c0-4.6 3.7-8.3 8.3-8.3s8.3 3.7 8.3 8.3-3.7 8.3-8.3 8.3z"/></svg> Escríbeme →</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileDrawer">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+    <a class="btn primary" href="https://wa.me/34684483549?text=Hola%20Pau%2C%20quiero%20ver%20una%20demo" target="_blank" rel="noopener">Pedir demo</a>
   </div>
 </header>
 
-<nav class="mobile-drawer" id="mobileDrawer" aria-label="Navegación móvil">
-  <a href="#servicios">Servicios</a>
-  <a href="#como-funciona">Cómo funciona</a>
-  <a href="#precios">Precios</a>
-  <a href="#contacto">Contacto</a>
-  <a class="btn-primary" href="https://wa.me/34684483549" target="_blank" rel="noopener"><svg class="wa-ico" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.2 3.4 5.4 4.7.7.3 1.3.5 1.8.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5-1.3c1.4.8 3.1 1.2 4.9 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3C4.2 15 3.7 13.5 3.7 12c0-4.6 3.7-8.3 8.3-8.3s8.3 3.7 8.3 8.3-3.7 8.3-8.3 8.3z"/></svg> Escríbeme por WhatsApp</a>
-</nav>
-
 <main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <div class="copy">
+        <p class="eyebrow">CRM · WhatsApp con IA · Voz con IA</p>
+        <h1>Ningún cliente sin respuesta. Ningún seguimiento olvidado.</h1>
+        <p class="lead">Monto el sistema que coge tus llamadas, contesta tus WhatsApps, agenda las citas y te avisa de a quién tienes que llamar. Para fisioterapeutas, inmobiliarias y gestorías del Maresme y Barcelona.</p>
+        <div class="ctas">
+          <a class="btn primary" href="https://wa.me/34684483549?text=Hola%20Pau%2C%20quiero%20ver%20una%20demo" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
+            Ver una demo con mi negocio</a>
+          <a class="btn ghost" href="#servicios">Qué incluye</a>
+        </div>
+        <ul class="ticks"><li>Sin permanencia</li><li>Configurado con tus datos reales</li><li>Hablas siempre conmigo</li></ul>
+      </div>
 
-<section class="hero">
-  <div class="wrap inner">
-    <div>
-      <span class="eyebrow">Automatización con IA</span>
-      <h1>Tu negocio, respondiendo <em>solo</em>, 24 horas al día.</h1>
-      <p class="lead">Diseño y monto asistentes de WhatsApp que responden preguntas, agendan citas y las gestionan solos, para que no se te escape ni un cliente por no contestar a tiempo.</p>
-      <div class="hero-actions">
-        <a class="btn-primary" href="https://wa.me/34684483549" target="_blank" rel="noopener"><svg class="wa-ico" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.2 3.4 5.4 4.7.7.3 1.3.5 1.8.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5-1.3c1.4.8 3.1 1.2 4.9 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3C4.2 15 3.7 13.5 3.7 12c0-4.6 3.7-8.3 8.3-8.3s8.3 3.7 8.3 8.3-3.7 8.3-8.3 8.3z"/></svg> Escríbeme por WhatsApp</a>
+      <div class="board" aria-label="Ejemplo de cómo funciona">
+        <div class="seg" id="seg" role="group" aria-label="Elige tu sector">
+          <i class="ind" id="segInd" aria-hidden="true"></i>
+          <button data-s="fisio" aria-pressed="true">Fisioterapia</button>
+          <button data-s="inmo" aria-pressed="false">Inmobiliaria</button>
+          <button data-s="gest" aria-pressed="false">Gestoría</button>
+        </div>
+        <div class="viewport" id="vp"><div class="track" id="track"></div></div>
+        <div class="dots" id="dots" role="tablist" aria-label="Piezas del sistema"></div>
+        <p class="hint">Desliza para ver las tres piezas: voz, WhatsApp y CRM</p>
       </div>
     </div>
-    <div class="hero-card">
-      <div class="phone-status">
-        <span class="sig"><i></i><i></i><i></i><i></i></span>
-        <span class="batt"></span>
-      </div>
-      <div class="phone-bar"><span class="wa-avatar">P</span> Tu negocio</div>
-      <div class="msgs">
-        <div class="msg bot">¡Hola! 👋 ¿Qué te gustaría hacer?</div>
-        <div class="msg user">Reservar una cita</div>
-        <div class="msg bot">Huecos libres para el viernes: 10:00, 16:00</div>
-        <div class="msg user">16:00</div>
-        <div class="msg bot">Cita confirmada ✅ Te esperamos el viernes a las 16:00</div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow">Te suena</p>
+      <h2>Los clientes no se pierden por el precio. Se pierden por llegar tarde.</h2>
+      <div class="scenes">
+        <article class="scene"><span class="when">Martes · 11:20</span><h3>Paciente en la camilla y suena el teléfono</h3><p>No puedes cogerlo. Era un paciente nuevo, y llamó a la siguiente clínica de Google.</p><p class="fix">El asistente de voz coge la llamada y le da cita.</p></article>
+        <article class="scene"><span class="when">Domingo · 23:47</span><h3>«¿El piso sigue disponible?»</h3><p>La oficina está cerrada. A las nueve de la mañana ya ha pedido visita en otra agencia.</p><p class="fix">El asistente de WhatsApp contesta al momento y agenda la visita.</p></article>
+        <article class="scene"><span class="when">Fin de trimestre</span><h3>80 clientes, 80 papeles que perseguir</h3><p>Correos, llamadas, WhatsApps… y siempre falta alguien. El último día, a las once de la noche.</p><p class="fix">El CRM manda los recordatorios solo y te dice quién falta.</p></article>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<div class="trust">
-  <span><span class="dot2"></span>Sin permanencia</span>
-  <span><span class="dot2"></span>Configuración a medida</span>
-  <span><span class="dot2"></span>Soporte directo conmigo</span>
-</div>
+  <section id="servicios" style="background:var(--paper); border-block:1px solid var(--line)">
+    <div class="wrap">
+      <p class="eyebrow">Servicios</p>
+      <h2>Tres piezas que trabajan juntas. Empiezas por la que más te duele.</h2>
+      <div class="svc">
+        <article>
+          <h3>Asistente de voz con IA</h3>
+          <p class="muted">Contesta el teléfono por ti, con una voz natural, a cualquier hora.</p>
+          <ul><li>Da, cambia y anula citas</li><li>Resuelve dudas: precios, horarios, mutuas</li><li>Te deja el resumen de cada llamada en el móvil</li><li>Pasa la llamada a una persona cuando hace falta</li></ul>
+          <p class="kw">En Instagram, comenta <b>VOZ</b></p>
+        </article>
+        <article>
+          <h3>Asistente de WhatsApp</h3>
+          <p class="muted">Responde en segundos lo que te preguntan siempre, también de noche.</p>
+          <ul><li>Configurado con tus servicios y precios reales</li><li>Agenda en tu Google Calendar, sin dobles reservas</li><li>Castellano, catalán o inglés</li><li>Te avisa cuando una conversación necesita a una persona</li></ul>
+          <p class="kw">En Instagram, comenta <b>BOT</b></p>
+        </article>
+        <article>
+          <h3>CRM de clientes</h3>
+          <p class="muted">Cada cliente con su historial, y un aviso el día que toca hacer algo.</p>
+          <ul><li>Ficha de cada contacto: llamadas, visitas, documentos</li><li>Recordatorios automáticos (seguimientos, papeles, citas)</li><li>Sabes quién está caliente y quién no</li><li>Lo que entra por voz y WhatsApp se apunta solo</li></ul>
+          <p class="kw">En Instagram, comenta <b>CRM</b></p>
+        </article>
+      </div>
+      <p class="extra"><b>También:</b> <span>Web para tu negocio</span><span>Ficha de Google Maps optimizada</span><span>Automatizaciones a medida</span></p>
+    </div>
+  </section>
 
-<section id="servicios">
-  <div class="wrap">
-    <span class="eyebrow">Qué hago</span>
-    <h2>Un asistente que trabaja mientras tú atiendes a tus clientes</h2>
-    <p class="section-lead">Empiezas por lo esencial y avanzas a tu ritmo. Cada fase es independiente: no hay que contratarlo todo de golpe.</p>
-    <div class="service-grid">
-      <div class="service-card reveal">
-        <div class="num">1</div>
-        <h3>Asistente de WhatsApp</h3>
-        <p>Responde automáticamente las preguntas más frecuentes de tus clientes: horarios, precios, servicios. Disponible a cualquier hora, también cuando estás cerrado.</p>
-        <ul>
-          <li>Configurado con tu horario y tarifas reales</li>
-          <li>Tono adaptado a tu negocio</li>
-          <li>Deriva a ti cuando hace falta un humano</li>
-        </ul>
+  <section id="como">
+    <div class="wrap">
+      <p class="eyebrow">Cómo trabajo</p>
+      <h2>De la primera llamada a funcionando, sin que toques nada técnico.</h2>
+      <ol class="steps">
+        <li><h3>Hablamos</h3><p class="muted">Me cuentas cómo trabajas y te enseño una demo con tu negocio. Sin compromiso.</p></li>
+        <li><h3>Lo configuro</h3><p class="muted">Cargo tus servicios, horarios, precios y forma de hablar.</p></li>
+        <li><h3>Lo probamos</h3><p class="muted">Revisamos juntos llamadas y mensajes reales antes de activarlo.</p></li>
+        <li><h3>Funciona</h3><p class="muted">Se conecta a tu teléfono, WhatsApp y calendario. Y lo seguimos ajustando.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="precios" style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow">Precios</p>
+      <h2>Claros desde el principio y sin permanencia.</h2>
+      <div class="prices">
+        <article class="price main">
+          <span class="badge">El más pedido</span>
+          <h3>Asistente de WhatsApp</h3>
+          <p class="amt">300 € <small>configuración</small></p>
+          <p class="muted">+ 50 €/mes de mantenimiento</p>
+          <ul><li>Preguntas frecuentes 24/7</li><li>Citas en tu calendario</li><li>Ajustes incluidos</li></ul>
+          <a class="btn primary" href="https://wa.me/34684483549?text=Hola%20Pau%2C%20me%20interesa%20el%20asistente%20de%20WhatsApp" target="_blank" rel="noopener">Lo quiero</a>
+        </article>
+        <article class="price">
+          <h3>Asistente de voz</h3>
+          <p class="amt">A medida</p>
+          <p class="muted">Depende de las llamadas que recibes. Te doy el precio cerrado en la demo.</p>
+          <ul><li>Voz natural en castellano y catalán</li><li>Citas y resúmenes</li><li>Se combina con WhatsApp</li></ul>
+          <a class="btn ghost" href="https://wa.me/34684483549?text=Hola%20Pau%2C%20me%20interesa%20el%20asistente%20de%20voz" target="_blank" rel="noopener">Pedir precio</a>
+        </article>
+        <article class="price">
+          <h3>CRM de clientes</h3>
+          <p class="amt">A medida</p>
+          <p class="muted">Según cuántos clientes gestionas y qué quieres automatizar.</p>
+          <ul><li>Montado sobre lo que ya usas</li><li>Recordatorios automáticos</li><li>Formación incluida</li></ul>
+          <a class="btn ghost" href="https://wa.me/34684483549?text=Hola%20Pau%2C%20me%20interesa%20el%20CRM" target="_blank" rel="noopener">Pedir precio</a>
+        </article>
       </div>
-      <div class="service-card reveal">
-        <div class="num">2</div>
-        <h3>Reservas y calendario</h3>
-        <p>El asistente agenda las citas solo, consultando tu disponibilidad real, y las añade a un calendario que puedes consultar desde tu móvil en cualquier momento.</p>
-        <ul>
-          <li>Sincronizado con Google Calendar</li>
-          <li>El cliente puede cancelar él mismo</li>
-          <li>Sin dobles reservas ni confusiones</li>
-        </ul>
-        <span class="tag">Se añade sobre la fase 1</span>
-      </div>
-      <div class="service-card reveal">
-        <div class="num">3</div>
-        <h3>Web para tu negocio</h3>
-        <p>Una página sencilla y cuidada donde tus clientes ven tus servicios, precios y horario, y pueden escribirte directamente por WhatsApp.</p>
-        <ul>
-          <li>Adaptada a móvil</li>
-          <li>Pensada para que te encuentren en Google</li>
-          <li>Ideal si aún no tienes presencia online</li>
-        </ul>
-      </div>
-      <div class="service-card reveal">
-        <div class="num">4</div>
-        <h3>Contenido y redes</h3>
-        <p>Gestión de tus publicaciones en Instagram: planificación, diseño y textos, para mantener tus redes activas sin que tengas que dedicarles tiempo.</p>
-        <ul>
-          <li>Calendario de contenido mensual</li>
-          <li>Fotos que ya tengas, editadas y con diseño</li>
-          <li>Pensado para negocios con equipo pequeño</li>
-        </ul>
+      <p class="muted" style="margin-top:16px; font-size:.9rem">Precios sin IVA. Web para tu negocio desde 300 €.</p>
+    </div>
+  </section>
+
+  <section id="dudas" style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow">Dudas habituales</p>
+      <h2>Lo que me preguntan siempre.</h2>
+      <div class="faq">
+        <details><summary>¿Necesito saber de tecnología?</summary><p>No. Yo lo configuro todo. Tú sigues usando tu teléfono, tu WhatsApp y tu calendario como hasta ahora.</p></details>
+        <details><summary>¿La voz suena a robot?</summary><p>No. Son voces naturales en castellano y catalán. En la demo la escuchas antes de decidir nada.</p></details>
+        <details><summary>¿Sustituye a mi equipo?</summary><p>No, le quita lo repetitivo: horarios, citas, recordatorios. Cuando hace falta una persona, te pasa la conversación o la llamada.</p></details>
+        <details><summary>¿Y los datos de mis clientes o pacientes?</summary><p>Se tratan según el RGPD, con proveedores europeos o con garantías equivalentes, y firmamos el contrato de encargado del tratamiento. Los datos son tuyos.</p></details>
+        <details><summary>¿Hay permanencia?</summary><p>No. La configuración se paga una vez y el mantenimiento es mes a mes.</p></details>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="como-funciona">
-  <div class="wrap">
-    <span class="eyebrow">Proceso</span>
-    <h2>Cómo trabajamos juntos</h2>
-    <p class="section-lead">De la primera conversación a tener el asistente funcionando, sin que tengas que preocuparte de nada técnico.</p>
-    <div class="steps">
-      <div class="step reveal">
-        <div class="stepnum">01</div>
-        <h3>Hablamos</h3>
-        <p>Te enseño cómo funciona con una demo real, sin compromiso.</p>
-      </div>
-      <div class="step reveal">
-        <div class="stepnum">02</div>
-        <h3>Lo configuro</h3>
-        <p>Cargo tus horarios, servicios y precios reales en el asistente.</p>
-      </div>
-      <div class="step reveal">
-        <div class="stepnum">03</div>
-        <h3>Lo probamos</h3>
-        <p>Revisamos juntos que todo responda tal y como quieres.</p>
-      </div>
-      <div class="step reveal">
-        <div class="stepnum">04</div>
-        <h3>Ya funciona</h3>
-        <p>Se conecta a tu WhatsApp y empieza a atender solo.</p>
+  <section id="contacto" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta">
+        <div style="display:flex; flex-direction:column; gap:16px">
+          <h2>Te enseño cómo quedaría en tu negocio.</h2>
+          <p class="lead">Cuéntame cómo trabajas ahora. En 15 minutos ves una demo con tus servicios y tus horarios.</p>
+          <div><a class="btn primary" href="https://wa.me/34684483549?text=Hola%20Pau%2C%20quiero%20ver%20una%20demo" target="_blank" rel="noopener">Escríbeme por WhatsApp</a></div>
+        </div>
+        <div class="contact">
+          <p><span>WhatsApp</span><br><b>684 48 35 49</b></p>
+          <p><span>Correo</span><br><b>contacto@pmotionia.com</b></p>
+          <p><span>Instagram</span><br><a href="https://www.instagram.com/pmotionia/" target="_blank" rel="noopener"><b>@pmotionia</b></a></p>
+          <p><span>Zona</span><br><b>Maresme y Barcelona</b></p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="precios">
-  <div class="wrap">
-    <span class="eyebrow">Precios</span>
-    <h2>Precio de lanzamiento para los primeros negocios</h2>
-    <p class="section-lead">Pago único de configuración, sin permanencia después. El acompañamiento y ajustes van aparte, solo si los necesitas.</p>
-    <div class="pricing-grid">
-      <div class="price-card reveal">
-        <div class="plan-name">Asistente básico</div>
-        <div class="plan-desc">Responde preguntas frecuentes por WhatsApp</div>
-        <div class="price">150–250€</div>
-        <div class="price-note">pago único</div>
-        <ul>
-          <li>Horarios, servicios y precios</li>
-          <li>Disponible 24/7</li>
-          <li>Configuración incluida</li>
-        </ul>
-        <a class="btn-primary" href="https://wa.me/34684483549" target="_blank" rel="noopener">Empezar</a>
-      </div>
-      <div class="price-card featured reveal">
-        <span class="badge">Más elegido</span>
-        <div class="plan-name">Asistente + Reservas</div>
-        <div class="plan-desc">Agenda y gestiona citas solo</div>
-        <div class="price">300–450€</div>
-        <div class="price-note">pago único · mantenimiento opcional desde 60€/mes</div>
-        <ul>
-          <li>Todo lo del plan básico</li>
-          <li>Calendario sincronizado</li>
-          <li>Cancelaciones automáticas</li>
-        </ul>
-        <a class="btn-primary" href="https://wa.me/34684483549" target="_blank" rel="noopener">Empezar</a>
-      </div>
-      <div class="price-card reveal">
-        <div class="plan-name">A medida</div>
-        <div class="plan-desc">Web, redes y automatización completa</div>
-        <div class="price">Consultar</div>
-        <div class="price-note">según necesidades</div>
-        <ul>
-          <li>Web para tu negocio</li>
-          <li>Gestión de redes sociales</li>
-          <li>Automatizaciones internas</li>
-        </ul>
-        <a class="btn-primary" href="https://wa.me/34684483549" target="_blank" rel="noopener">Hablemos</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <span class="eyebrow">Preguntas frecuentes</span>
-    <h2>Dudas habituales</h2>
-    <div class="faq-list">
-      <div class="faq-item reveal">
-        <h3>¿Necesito saber de tecnología para usarlo?</h3>
-        <p>No. Yo me encargo de toda la configuración. Tú solo usas WhatsApp y tu calendario, tal como ya lo haces hoy.</p>
-      </div>
-      <div class="faq-item reveal">
-        <h3>¿Sustituye la atención personal?</h3>
-        <p>No, la complementa. El asistente resuelve lo repetitivo (horarios, disponibilidad, reservas), y tú sigues atendiendo directamente cuando quieras o haga falta.</p>
-      </div>
-      <div class="faq-item reveal">
-        <h3>¿Hay permanencia?</h3>
-        <p>No. El pago de configuración es único. El mantenimiento posterior es opcional, mes a mes, sin ataduras.</p>
-      </div>
-      <div class="faq-item reveal">
-        <h3>¿Y si algo falla?</h3>
-        <p>Tienes contacto directo conmigo, no es un producto que compras y desaparece. Reviso y ajusto lo que necesites.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="cta" id="contacto">
-  <div class="wrap">
-    <h2>Hablemos de tu negocio</h2>
-    <p>Cuéntame cómo trabajas ahora y te enseño, sin compromiso, cómo quedaría tu asistente.</p>
-    <a class="btn-primary" href="https://wa.me/34684483549" target="_blank" rel="noopener"><svg class="wa-ico" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.2 3.4 5.4 4.7.7.3 1.3.5 1.8.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5-1.3c1.4.8 3.1 1.2 4.9 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3C4.2 15 3.7 13.5 3.7 12c0-4.6 3.7-8.3 8.3-8.3s8.3 3.7 8.3 8.3-3.7 8.3-8.3 8.3z"/></svg> Escríbeme por WhatsApp</a>
-  </div>
-</section>
-
-<section class="legal" id="legal">
-  <div class="wrap">
-    <span class="eyebrow">Información legal</span>
-    <h2 style="font-size:30px;margin-bottom:36px;">Privacidad y condiciones</h2>
-
-    <details class="legal-item" id="legal-privacidad">
-      <summary>Política de Privacidad <span class="chev">+</span></summary>
-      <div class="legal-body">
-        <h3>1. Responsable del tratamiento</h3>
-        <p>PmotionIA (en adelante, "nosotros") es responsable del tratamiento de los datos personales que se recogen a través de este sitio web y del canal de WhatsApp asociado.</p>
-
-        <h3>2. Qué datos recogemos</h3>
-        <ul>
-          <li>Datos de contacto que nos facilites voluntariamente al escribirnos por WhatsApp o por el formulario de contacto: nombre, número de teléfono y el contenido de tus mensajes.</li>
-          <li>Datos técnicos básicos de navegación, si el sitio los recoge de forma automática.</li>
-        </ul>
-
-        <h3>3. Con qué finalidad tratamos tus datos</h3>
-        <ul>
-          <li>Responder a tus consultas sobre nuestros servicios.</li>
-          <li>Gestionar la relación comercial en caso de contratar alguno de nuestros servicios.</li>
-          <li>Configurar y prestar el servicio de asistente automatizado de WhatsApp, en caso de ser cliente.</li>
-        </ul>
-
-        <h3>4. Base legal</h3>
-        <p>El tratamiento se basa en tu consentimiento, otorgado al iniciar una conversación con nosotros o al rellenar el formulario de contacto, y en la ejecución de la relación contractual en caso de contratar un servicio.</p>
-
-        <h3>5. Con quién compartimos tus datos</h3>
-        <p>Para prestar el servicio, utilizamos las siguientes plataformas de terceros, que actúan como encargados del tratamiento:</p>
-        <ul>
-          <li><strong>Meta / WhatsApp Business Platform</strong>, para la mensajería.</li>
-          <li><strong>Google Calendar</strong>, para la gestión de citas, cuando el servicio contratado lo incluye.</li>
-          <li><strong>Proveedores de alojamiento (hosting)</strong>, para el funcionamiento técnico del asistente y del sitio web.</li>
-        </ul>
-        <p>No vendemos ni cedemos tus datos a terceros con fines comerciales ajenos a la prestación del servicio.</p>
-
-        <h3>6. Cuánto tiempo conservamos tus datos</h3>
-        <p>Conservamos los datos de contacto mientras exista una relación comercial activa, y durante los plazos legalmente exigibles a efectos fiscales y administrativos.</p>
-
-        <h3>7. Tus derechos</h3>
-        <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad de tus datos escribiéndonos directamente por WhatsApp.</p>
-
-        <h3>8. Cambios en esta política</h3>
-        <p>Podemos actualizar este documento para reflejar cambios en el servicio o en la normativa aplicable. La fecha de la última actualización aparece al inicio de este apartado.</p>
-      </div>
-    </details>
-
-    <details class="legal-item" id="legal-terminos">
-      <summary>Términos y Condiciones <span class="chev">+</span></summary>
-      <div class="legal-body">
-        <h3>1. Objeto</h3>
-        <p>PmotionIA presta servicios de configuración de asistentes automatizados de WhatsApp, integración con calendarios, diseño web y gestión de contenido para redes sociales, dirigidos a pequeños negocios.</p>
-
-        <h3>2. Naturaleza del servicio</h3>
-        <p>El servicio consiste en la configuración de herramientas de mensajería y automatización sobre plataformas de terceros (Meta / WhatsApp Business Platform, Google Calendar, y proveedores de alojamiento web). PmotionIA no es propietario de dichas plataformas y su funcionamiento depende, en parte, de la disponibilidad y condiciones de esos terceros.</p>
-
-        <h3>3. Precio y forma de pago</h3>
-        <ul>
-          <li>La configuración inicial del asistente se cobra como pago único, según el alcance acordado con cada cliente.</li>
-          <li>El mantenimiento posterior es opcional y se factura, en su caso, de forma mensual, sin permanencia mínima.</li>
-          <li>Los precios vigentes en el momento de la contratación son los acordados expresamente con el cliente, pudiendo diferir de los precios orientativos mostrados en este sitio web.</li>
-        </ul>
-
-        <h3>4. Cancelación</h3>
-        <p>El cliente puede dejar de contratar el servicio de mantenimiento en cualquier momento, sin penalización, avisando con antelación razonable. El pago único de configuración inicial no es reembolsable una vez prestado el servicio.</p>
-
-        <h3>5. Obligaciones del cliente</h3>
-        <ul>
-          <li>Facilitar información veraz sobre horarios, servicios y precios de su negocio para la correcta configuración del asistente.</li>
-          <li>Disponer de una cuenta de WhatsApp Business válida y, en su caso, de una cuenta de Google Calendar, para la integración del servicio.</li>
-        </ul>
-
-        <h3>6. Limitación de responsabilidad</h3>
-        <p>PmotionIA pone los medios razonables para que el servicio funcione correctamente, pero no puede garantizar la disponibilidad continua e ininterrumpida de plataformas de terceros (WhatsApp, Google, proveedores de alojamiento), cuyo funcionamiento escapa a su control directo.</p>
-
-        <h3>7. Propiedad</h3>
-        <p>La configuración específica realizada para cada cliente puede ser utilizada libremente por este mientras dure la relación de servicio. El código y las herramientas generales de automatización desarrolladas por PmotionIA no se ceden en propiedad, salvo acuerdo expreso en contrario.</p>
-
-        <h3>8. Legislación aplicable</h3>
-        <p>Estas condiciones se rigen por la legislación española. Cualquier controversia se intentará resolver de buena fe entre las partes antes de acudir a la vía judicial correspondiente.</p>
-
-        <h3>9. Contacto</h3>
-        <p>Para cualquier duda sobre estas condiciones, puedes escribirnos directamente por WhatsApp desde el botón de contacto de este sitio.</p>
-      </div>
-    </details>
-
-  </div>
-</section>
-
+  </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>PmotionIA © 2026</span>
-    <span class="footer-links">
-      <a href="mailto:contacto@pmotionia.com">contacto@pmotionia.com</a>
-      <a href="https://www.instagram.com/pau.automatizaciones/" target="_blank" rel="noopener">Instagram</a>
-      <a href="#legal-privacidad" onclick="document.getElementById('legal-privacidad').open=true;">Política de privacidad</a>
-      <a href="#legal-terminos" onclick="document.getElementById('legal-terminos').open=true;">Términos y condiciones</a>
-    </span>
-    <span>Barcelona · Maresme</span>
+    <div class="legal">
+      <details id="legal-privacidad"><summary>Política de privacidad</summary>
+        <h4>1. Responsable del tratamiento</h4><p>PmotionIA es responsable del tratamiento de los datos personales que se recogen a través de este sitio web y de los canales de contacto asociados (WhatsApp, teléfono y correo).</p>
+        <h4>2. Qué datos recogemos</h4><p>Los datos de contacto que nos facilites voluntariamente: nombre, número de teléfono, correo y el contenido de tus mensajes. Datos técnicos básicos de navegación, si el sitio los recoge de forma automática.</p>
+        <h4>3. Finalidad</h4><p>Responder a tus consultas, gestionar la relación comercial y, si eres cliente, configurar y prestar los servicios contratados (asistentes de WhatsApp y de voz, CRM, web).</p>
+        <h4>4. Base legal</h4><p>Tu consentimiento al contactarnos y, si contratas un servicio, la ejecución del contrato.</p>
+        <h4>5. Con quién compartimos tus datos</h4><p>Con los proveedores necesarios para prestar el servicio, que actúan como encargados del tratamiento: Meta / WhatsApp Business Platform, Google (Calendar y Workspace), proveedores de telefonía y voz con IA, y proveedores de alojamiento. No vendemos ni cedemos tus datos con fines comerciales ajenos al servicio.</p>
+        <h4>6. Conservación</h4><p>Mientras exista una relación comercial activa y durante los plazos legales exigibles a efectos fiscales y administrativos.</p>
+        <h4>7. Tus derechos</h4><p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a contacto@pmotionia.com o por WhatsApp.</p>
+        <h4>8. Cambios</h4><p>Podemos actualizar esta política para reflejar cambios en el servicio o en la normativa.</p>
+      </details>
+      <details id="legal-terminos"><summary>Términos y condiciones</summary>
+        <h4>1. Objeto</h4><p>PmotionIA presta servicios de configuración de asistentes de WhatsApp y de voz con inteligencia artificial, CRM de gestión de clientes, integración con calendarios, diseño web y automatizaciones para negocios.</p>
+        <h4>2. Naturaleza del servicio</h4><p>El servicio se presta sobre plataformas de terceros (Meta / WhatsApp Business Platform, Google, proveedores de telefonía, voz e IA y de alojamiento web). PmotionIA no es propietario de dichas plataformas y su funcionamiento depende, en parte, de su disponibilidad y condiciones.</p>
+        <h4>3. Precio y forma de pago</h4><p>La configuración inicial se cobra como pago único según el alcance acordado. El mantenimiento es mensual y sin permanencia. Los precios vigentes son los acordados expresamente con cada cliente, y pueden diferir de los orientativos de esta web.</p>
+        <h4>4. Cancelación</h4><p>El cliente puede dejar el mantenimiento en cualquier momento, avisando con antelación razonable. La configuración inicial no es reembolsable una vez prestado el servicio.</p>
+        <h4>5. Obligaciones del cliente</h4><p>Facilitar información veraz sobre horarios, servicios y precios, y disponer de las cuentas necesarias (WhatsApp Business, Google, línea de teléfono) para la integración.</p>
+        <h4>6. Limitación de responsabilidad</h4><p>PmotionIA pone los medios razonables para que el servicio funcione correctamente, pero no puede garantizar la disponibilidad continua de plataformas de terceros.</p>
+        <h4>7. Propiedad</h4><p>La configuración específica de cada cliente puede usarla libremente mientras dure el servicio. El código y las herramientas generales de PmotionIA no se ceden en propiedad, salvo acuerdo expreso.</p>
+        <h4>8. Legislación aplicable</h4><p>Estas condiciones se rigen por la legislación española. Cualquier controversia se intentará resolver de buena fe antes de acudir a la vía judicial.</p>
+      </details>
+    </div>
+    <div class="bottom"><span>PmotionIA © 2026 · Maresme · Barcelona</span><span>contacto@pmotionia.com</span></div>
   </div>
 </footer>
 
+<a class="fab" href="https://wa.me/34684483549?text=Hola%20Pau%2C%20quiero%20ver%20una%20demo" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
+</a>
+
 <script>
 (function(){
-  var header = document.getElementById('site-header');
-  var toggle = document.getElementById('navToggle');
-  var drawer = document.getElementById('mobileDrawer');
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const RM = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  window.addEventListener('scroll', function(){
-    header.classList.toggle('scrolled', window.scrollY > 12);
-  }, {passive:true});
+  /* ---- física (skill apple-design): muelle con damping/response, proyección de inercia y efecto goma ---- */
+  function spring(o){
+    const k = Math.pow(2*Math.PI/o.response, 2), c = 4*Math.PI*o.damping/o.response;
+    const eps = Math.max(Math.abs(o.to - o.from), 1) * .002;
+    let x = o.from, v = o.v || 0, raf = 0, last = performance.now(), stopped = false;
+    const h = { get v(){ return v; }, stop(){ stopped = true; cancelAnimationFrame(raf); } };
+    if (RM){ o.update(o.to); o.done && o.done(); return h; }
+    function step(now){
+      if (stopped) return;
+      const dt = Math.min(.064, (now - last)/1000); last = now;
+      const n = Math.max(1, Math.ceil(dt/.004)), s = dt/n;
+      for (let i=0;i<n;i++){ const a = -k*(x - o.to) - c*v; v += a*s; x += v*s; }
+      if (Math.abs(x - o.to) < eps && Math.abs(v) < eps*10){ o.update(o.to); o.done && o.done(); return; }
+      o.update(x); raf = requestAnimationFrame(step);
+    }
+    raf = requestAnimationFrame(step); return h;
+  }
+  const project = (v, d=.998) => (v/1000) * d / (1-d);
+  const rubber = (over, dim, c=.55) => (over*dim*c) / (dim + c*Math.abs(over));
 
-  function closeDrawer(){
-    drawer.classList.remove('open');
-    toggle.setAttribute('aria-expanded','false');
-    document.body.style.overflow = '';
+  /* ---- cabecera ---- */
+  const top = $("top");
+  addEventListener("scroll", () => top.classList.toggle("scrolled", scrollY > 8), { passive:true });
+
+  /* ---- contenido de la centralita por sector ---- */
+  const ICON = {
+    voz:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v18M8 7v10M4 10v4M16 7v10M20 10v4"/></svg>',
+    wa:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z"/></svg>',
+    crm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 9h10M7 13h6M7 17h4"/></svg>'
+  };
+  const wave = () => '<div class="wave" aria-hidden="true">' + Array.from({length:26},(_,i)=>`<i style="height:${6+Math.round(18*Math.abs(Math.sin(i*1.7)))}px"></i>`).join("") + '</div>';
+  const S = {
+    fisio:{
+      voz:{who:"Llamada entrante · 11:20", lines:[["Paciente","Hola, me duele la espalda, ¿tenéis hueco esta semana?"],["Asistente","Sí: jueves a las 18:00 o viernes a las 10:00. ¿Cuál le va mejor?"],["Paciente","El jueves."]], note:"Cita creada · resumen enviado a tu móvil"},
+      wa:{who:"Laura · WhatsApp", msgs:[["in","¿Esto lo cubre mi mutua?","21:42"],["out","Sí, trabajamos con Sanitas y Adeslas. ¿Te reservo una primera visita? Mañana tengo a las 9:30.","21:42"],["in","Perfecto, a las 9:30 👍","21:43"]]},
+      crm:{rows:[["Laura Gómez","Primera visita · mañana 9:30","Nueva"],["Jordi Puig","Sesión 4 de 6 · bono por renovar","Llamar hoy"],["Marta Vidal","Sin venir desde hace 40 días","Reactivar"]], alert:"Hoy: 3 recordatorios de cita enviados solos"}
+    },
+    inmo:{
+      voz:{who:"Llamada entrante · 20:15", lines:[["Clienta","Llamo por el piso de la calle Mayor. ¿Sigue disponible?"],["Asistente","Sí. ¿Le va bien verlo el jueves a las seis, o prefiere el viernes a las diez?"],["Clienta","El jueves a las seis."]], note:"Visita en la agenda · ficha creada en el CRM"},
+      wa:{who:"Marc · WhatsApp", msgs:[["in","¿El piso sigue disponible?","23:47"],["out","¡Sí! 3 hab., 92 m², 1.150 €/mes. ¿Qué presupuesto y fechas buscas?","23:47"],["in","Hasta 1.200 €, entrar en noviembre","23:48"]]},
+      crm:{rows:[["Marta Ruiz","Vio Calle Mayor el lunes","Caliente"],["Marc Soler","Busca alquiler · hasta 1.200 €","Nuevo"],["Família Prat","Venta · esperando tasación","Seguir el 20/10"]], alert:"Recordatorio: llamar a Marta hoy antes de las 13:00"}
+    },
+    gest:{
+      voz:{who:"Llamada entrante · 9:05", lines:[["Cliente","¿Ya tenéis mis facturas del trimestre?"],["Asistente","Faltan dos del proveedor de agosto. Le envío ahora el enlace para subirlas."],["Cliente","Perfecto, gracias."]], note:"Enlace enviado · tarea creada para el equipo"},
+      wa:{who:"Núria · WhatsApp", msgs:[["in","¿Qué necesitáis para el modelo 303?","18:10"],["out","Facturas emitidas y recibidas de julio a septiembre. Súbelas aquí antes del día 15 👉 enlace","18:10"],["in","Subidas ✅","18:32"]]},
+      crm:{rows:[["Núria Sala","Facturas T3 completas","Listo"],["Taller Costa","Faltan 2 facturas de gastos","Recordado"],["Pol Ferrer","Sin enviar nada todavía","Llamar"]], alert:"Recordatorios del trimestre enviados a 34 clientes"}
+    }
+  };
+  let sector = "fisio";
+  function render(){
+    const d = S[sector];
+    $("track").innerHTML = `
+      <div class="slide" aria-roledescription="pieza"><div class="panel">
+        <div class="head"><span class="ico">${ICON.voz}</span><div><b>Asistente de voz</b><small>${d.voz.who}</small></div><span class="tag">Voz</span></div>
+        ${wave()}
+        ${d.voz.lines.map(l=>`<p class="line"><b>${l[0]}</b><span>${l[1]}</span></p>`).join("")}
+        <p class="alert" style="margin-top:auto">✓ ${d.voz.note}</p>
+      </div></div>
+      <div class="slide" aria-roledescription="pieza"><div class="panel">
+        <div class="head"><span class="ico">${ICON.wa}</span><div><b>Asistente de WhatsApp</b><small>${d.wa.who}</small></div><span class="tag">WhatsApp</span></div>
+        ${d.wa.msgs.map(m=>`<p class="bub ${m[0]}">${m[1]}<small>${m[2]}</small></p>`).join("")}
+      </div></div>
+      <div class="slide" aria-roledescription="pieza"><div class="panel">
+        <div class="head"><span class="ico">${ICON.crm}</span><div><b>CRM de clientes</b><small>Hoy</small></div><span class="tag">CRM</span></div>
+        ${d.crm.rows.map(r=>`<div class="card"><div class="row"><b>${r[0]}</b><span class="chip ${/Caliente|Llamar/.test(r[2])?'hot':''}">${r[2]}</span></div><small class="muted">${r[1]}</small></div>`).join("")}
+        <p class="alert" style="margin-top:auto">🔔 ${d.crm.alert}</p>
+      </div></div>`;
   }
-  function openDrawer(){
-    drawer.classList.add('open');
-    toggle.setAttribute('aria-expanded','true');
-    document.body.style.overflow = 'hidden';
+
+  /* ---- selector de sector: el fondo se desliza con un muelle ---- */
+  const ind = $("segInd"); let ix = null, iw = null, sx = null, sw = null;
+  function moveInd(btn, instant){
+    const tx = btn.offsetLeft, tw = btn.offsetWidth;
+    if (instant || ix === null){ ix = tx; iw = tw; ind.style.transform = `translateX(${tx}px)`; ind.style.width = tw+"px"; return; }
+    const vx = sx ? sx.v : 0, vw = sw ? sw.v : 0; sx && sx.stop(); sw && sw.stop();
+    sx = spring({ from:ix, to:tx, v:vx, damping:1, response:.32, update:x=>{ ix = x; ind.style.transform = `translateX(${x}px)`; } });
+    sw = spring({ from:iw, to:tw, v:vw, damping:1, response:.32, update:w=>{ iw = w; ind.style.width = w+"px"; } });
   }
-  toggle.addEventListener('click', function(){
-    var isOpen = drawer.classList.contains('open');
-    isOpen ? closeDrawer() : openDrawer();
+  document.querySelectorAll("#seg button").forEach(b => {
+    const pick = () => { if (b.dataset.s === sector) return;
+      document.querySelectorAll("#seg button").forEach(x => x.setAttribute("aria-pressed", x === b));
+      sector = b.dataset.s; moveInd(b); render(); };
+    b.addEventListener("pointerdown", pick); b.addEventListener("click", pick);   // responde al pulsar
   });
-  drawer.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', closeDrawer);
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') closeDrawer();
-  });
 
-  var revealItems = document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    var groups = {};
-    revealItems.forEach(function(el){
-      var parent = el.parentElement;
-      if(!groups[parent] ) { groups[parent] = []; }
-    });
-    var counters = new WeakMap();
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          var parent = entry.target.parentElement;
-          var i = counters.get(parent) || 0;
-          entry.target.style.transitionDelay = (i * 90) + 'ms';
-          counters.set(parent, i + 1);
-          entry.target.classList.add('visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
-    revealItems.forEach(function(el){ io.observe(el); });
-  } else {
-    revealItems.forEach(function(el){ el.classList.add('visible'); });
+  /* ---- carrusel: sigue al dedo 1:1, hereda la velocidad, proyecta la inercia y cede en los bordes ---- */
+  const vp = $("vp"), track = $("track"), N = 3;
+  let pos = 0, idx = 0, sp = null;
+  const W = () => vp.offsetWidth;
+  const set = x => { pos = x; track.style.transform = `translateX(${x}px)`; };
+  function go(i, v){
+    idx = Math.max(0, Math.min(N-1, i)); sp && sp.stop();
+    sp = spring({ from:pos, to:-idx*W(), v:v||0, damping:1, response:.38, update:set });
+    document.querySelectorAll("#dots button").forEach((b,j)=>b.setAttribute("aria-current", j===idx));
   }
+  $("dots").innerHTML = ["Voz","WhatsApp","CRM"].map((t,i)=>`<button role="tab" aria-label="${t}" aria-current="${i===0}"><i></i></button>`).join("");
+  $("dots").querySelectorAll("button").forEach((b,i)=>{ b.addEventListener("pointerdown", ()=>go(i)); b.addEventListener("click", ()=>go(i)); });
 
-  var navLinks = document.querySelectorAll('nav[aria-label="Navegación principal"] a');
-  var sections = Array.prototype.map.call(navLinks, function(a){
-    return document.querySelector(a.getAttribute('href'));
-  }).filter(Boolean);
-  if('IntersectionObserver' in window && sections.length){
-    var spy = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          var id = '#' + entry.target.id;
-          navLinks.forEach(function(a){
-            a.classList.toggle('active', a.getAttribute('href') === id);
-          });
-        }
-      });
-    }, {rootMargin:'-45% 0px -50% 0px'});
-    sections.forEach(function(s){ spy.observe(s); });
-  }
+  let pid = null, x0 = 0, y0 = 0, base = 0, hist = [], locked = false;
+  vp.addEventListener("pointerdown", e => { pid = e.pointerId; x0 = e.clientX; y0 = e.clientY; sp && sp.stop(); base = pos; hist = [{x:x0, t:e.timeStamp}]; locked = false; });
+  vp.addEventListener("pointermove", e => {
+    if (e.pointerId !== pid) return;
+    const dx = e.clientX - x0, dy = e.clientY - y0;
+    if (!locked){
+      if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)){ pid = null; go(idx); return; }   // era scroll vertical
+      if (Math.abs(dx) < 10) return;
+      locked = true; try{ vp.setPointerCapture(pid); }catch(err){}
+    }
+    hist.push({x:e.clientX, t:e.timeStamp}); if (hist.length > 6) hist.shift();
+    let x = base + dx, min = -(N-1)*W();
+    if (x > 0) x = rubber(x, W()); else if (x < min) x = min - rubber(min - x, W());
+    set(x);
+  });
+  const end = e => {
+    if (e.pointerId !== pid) return; pid = null;
+    if (!locked){ go(idx); return; }
+    const a = hist[0], b = hist[hist.length-1], v = (b.x - a.x) / Math.max(1, b.t - a.t) * 1000;
+    const land = pos + project(v);                          // a dónde iba el gesto, no dónde lo soltó
+    go(Math.round(-land / W()), v);
+  };
+  vp.addEventListener("pointerup", end); vp.addEventListener("pointercancel", end);
+  vp.addEventListener("keydown", e => { if (e.key === "ArrowRight") go(idx+1); if (e.key === "ArrowLeft") go(idx-1); });
+  vp.tabIndex = 0;
+  addEventListener("resize", () => { set(-idx*W()); moveInd(document.querySelector('#seg [aria-pressed="true"]'), true); });
+
+  render(); moveInd(document.querySelector('#seg [aria-pressed="true"]'), true);
+  if (document.fonts) document.fonts.ready.then(() => moveInd(document.querySelector('#seg [aria-pressed="true"]'), true));
 })();
 </script>
-
 </body>
 </html>
